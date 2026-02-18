@@ -133,6 +133,11 @@ _Screenshots to be added_
 
 ## Changelog
 
+### 1.0.13 - 2026-02-19
+* Price type buttons: Active=Green, Inactive=Red
+* Total always shows monthly cost regardless of button selection
+* Removed price-changing AJAX when clicking Monthly/Hourly buttons (visual toggle only)
+
 ### 1.0.12 - 2026-02-19
 * Fixed price type toggle buttons: Monthly defaults to green, Hourly inactive is gray
 * Clicking toggles green highlight between Monthly/Hourly buttons

@@ -20,9 +20,9 @@ foreach ($tiers as $tier) {
     if ($tier->monthly_price > 0) $price_types['monthly'] = true;
 }
 $price_types = array_keys($price_types);
-$default_price_type = in_array('hourly', $price_types) ? 'hourly' : ($price_types[0] ?? 'hourly');
+$default_price_type = 'monthly';
 
-$default_price = $default_tier ? ($default_price_type === 'monthly' ? $default_tier->monthly_price : $default_tier->hourly_price) : 0;
+$default_price = $default_tier ? $default_tier->monthly_price : 0;
 ?>
 
 <div class="wc-cgm-pricing-panel" 

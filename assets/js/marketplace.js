@@ -308,8 +308,10 @@
             var $input = $(this);
             var $panel = $input.closest('.wc-cgm-pricing-panel');
             var quantity = parseInt($input.val()) || 1;
-            var price = parseFloat($panel.find('.wc-cgm-price-main').data('price')) || 0;
-            var total = price * quantity;
+            
+            var currentTier = parseInt($panel.find('.wc-cgm-add-to-cart').data('tier-level')) || 1;
+            var monthlyPrice = parseFloat($panel.data('tier-' + currentTier + '-monthly')) || 0;
+            var total = monthlyPrice * quantity;
 
             $panel.find('.wc-cgm-total-price').data('total', total);
 
@@ -339,31 +341,9 @@
         updatePriceType: function(e) {
             var $btn = $(this);
             var $panel = $btn.closest('.wc-cgm-pricing-panel');
-            var priceType = $btn.data('price-type');
 
             $panel.find('.wc-cgm-price-type-btn').removeClass('active');
             $btn.addClass('active');
-
-            $panel.find('.wc-cgm-add-to-cart').data('price-type', priceType);
-
-            var currentTier = parseInt($panel.find('.wc-cgm-add-to-cart').data('tier-level')) || 1;
-            var hourlyPrice = parseFloat($panel.data('tier-' + currentTier + '-hourly')) || 0;
-            var monthlyPrice = parseFloat($panel.data('tier-' + currentTier + '-monthly')) || 0;
-            var newPrice = priceType === 'monthly' ? monthlyPrice : hourlyPrice;
-            
-            $panel.find('.wc-cgm-price-main')
-                .data('price', newPrice)
-                .html(WC_CGM_Marketplace.formatPrice(newPrice));
-            
-            if (priceType === 'monthly') {
-                var hourlyEquiv = monthlyPrice / 160;
-                $panel.find('.wc-cgm-price-sub').html(WC_CGM_Marketplace.formatPrice(hourlyEquiv) + '/hr');
-            } else {
-                var monthlyEquiv = hourlyPrice * 160;
-                $panel.find('.wc-cgm-price-sub').html(WC_CGM_Marketplace.formatPrice(monthlyEquiv) + '/mo');
-            }
-            
-            $panel.find('.wc-cgm-quantity-input').trigger('change');
         },
 
         updateSectionHeader: function(count) {
