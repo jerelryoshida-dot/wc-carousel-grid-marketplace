@@ -7,6 +7,18 @@ $is_popular = $is_popular ?? false;
 $specialization = $specialization ?? '';
 $tiers = $tiers ?? [];
 $atts = $atts ?? [];
+
+$selected_tier = isset($atts['selected_tier']) ? (int) $atts['selected_tier'] : 1;
+$tier_badges = [1 => 'Entry', 2 => 'Mid', 3 => 'Expert'];
+$tier_classes = [1 => 'entry', 2 => 'mid', 3 => 'expert'];
+
+$default_tier = !empty($tiers) ? $tiers[0] : null;
+foreach ($tiers as $tier) {
+    if ($tier->hourly_price > 0 || $tier->monthly_price > 0) {
+        $default_tier = $tier;
+        break;
+    }
+}
 ?>
 
 <div class="wc-cgm-card" data-product-id="<?php echo esc_attr($product_id); ?>" <?php echo !empty($tiers) ? 'data-has-tiers="true"' : ''; ?>>
@@ -19,6 +31,11 @@ $atts = $atts ?? [];
 
     <h3 class="wc-cgm-card-title">
         <a href="<?php echo esc_url($product->get_permalink()); ?>">
+            <?php if (!empty($tiers) && $default_tier && isset($tier_badges[$default_tier->tier_level])) : ?>
+            <span class="wc-cgm-tier-badge <?php echo esc_attr($tier_classes[$default_tier->tier_level] ?? 'default'); ?>">
+                <?php echo esc_html($tier_badges[$default_tier->tier_level]); ?>
+            </span>
+            <?php endif; ?>
             <?php echo esc_html($product->get_name()); ?>
         </a>
     </h3>

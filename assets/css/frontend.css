@@ -157,3 +157,123 @@
     border-color: #a855f7;
     background: #faf5ff;
 }
+
+/* ============================================
+   Tier Badge (Before Title)
+   ============================================ */
+
+.wc-cgm-tier-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.wc-cgm-tier-badge.entry {
+    background: #dcfce7;
+    color: #166534;
+    border: 1px solid #86efac;
+}
+
+.wc-cgm-tier-badge.mid {
+    background: #dbeafe;
+    color: #1e40af;
+    border: 1px solid #93c5fd;
+}
+
+.wc-cgm-tier-badge.expert {
+    background: #f3e8ff;
+    color: #7c3aed;
+    border: 1px solid #c4b5fd;
+}
+
+/* ============================================
+   Enhanced Filter Bar (Tab-Style Buttons)
+   ============================================ */
+
+.wc-cgm-filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    background: #f9fafb;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    border: 1px solid #e5e7eb;
+}
+
+.wc-cgm-filter-label {
+    font-weight: 600;
+    color: #374151;
+    white-space: nowrap;
+}
+
+.wc-cgm-tier-filters {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.wc-cgm-tier-btn {
+    padding: 10px 20px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    color: #6b7280;
+}
+
+.wc-cgm-tier-btn:hover {
+    border-color: #d1d5db;
+    background: #f9fafb;
+}
+
+.wc-cgm-tier-btn.active {
+    font-weight: 600;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Entry tier active state */
+.wc-cgm-tier-btn.wc-cgm-tier-entry.active {
+    background: #dcfce7;
+    border-color: #22c55e;
+    color: #166534;
+}
+
+/* Mid tier active state */
+.wc-cgm-tier-btn.wc-cgm-tier-mid.active {
+    background: #dbeafe;
+    border-color: #3b82f6;
+    color: #1e40af;
+}
+
+/* Expert tier active state */
+.wc-cgm-tier-btn.wc-cgm-tier-expert.active {
+    background: #f3e8ff;
+    border-color: #a855f7;
+    color: #7c3aed;
+}
+
+/* "All" button active state */
+.wc-cgm-tier-btn:not(.wc-cgm-tier-entry):not(.wc-cgm-tier-mid):not(.wc-cgm-tier-expert).active {
+    background: #1f2937;
+    border-color: #1f2937;
+    color: white;
+}
+
+/* ============================================
+   Hide Tier Dropdown (No Longer Used)
+   ============================================ */
+
+.wc-cgm-tier-selector-mini {
+    display: none;
+}
