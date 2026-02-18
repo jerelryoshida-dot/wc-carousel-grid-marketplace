@@ -97,8 +97,25 @@ _Screenshots to be added_
 
 ## Changelog
 
-### 1.0.0
-- Initial release
+### 1.0.4 - 2026-02-18
+- Fixed PHP syntax errors in Admin_Manager, Repository, Marketplace_Widget, and Marketplace
+- Enhanced admin settings and product meta box functionality
+- Improved marketplace display with better pricing panel handling
+- Updated Elementor widget with proper method declarations
+- Enhanced WooCommerce hooks integration
+
+### 1.0.3 - 2026-02-18
+- Fixed Elementor widget registration timing issue
+- Fixed product meta box not loading without tier pricing enabled
+- Added marketplace_only toggle to show all WC products by default
+- Added admin notice when no products found
+- Tier pricing tables now created on activation (regardless of setting)
+- Enhanced Elementor editor preview with status indicators
+
+### 1.0.2 - 2026-02-18
+- Development update
+
+_Full changelog available in readme.txt_
 
 ## Credits
 
