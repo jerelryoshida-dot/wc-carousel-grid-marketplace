@@ -18,9 +18,7 @@ class Activator {
         global $wpdb;
         $charset_collate = $wpdb->get_charset_collate();
 
-        if (wc_cgm_tier_pricing_enabled() || get_option('wc_cgm_enable_tier_pricing', false)) {
-            $this->create_tier_tables($charset_collate);
-        }
+        $this->create_tier_tables($charset_collate);
     }
 
     private function create_tier_tables(string $charset_collate): void {

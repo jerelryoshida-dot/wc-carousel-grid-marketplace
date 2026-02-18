@@ -28,6 +28,7 @@ class Repository {
             'order' => 'DESC',
             'popular_only' => false,
             'search' => '',
+            'marketplace_only' => false,
         ];
 
         $args = wp_parse_args($args, $defaults);
@@ -45,14 +46,17 @@ class Repository {
             'offset' => (int) $args['offset'],
             'orderby' => $args['orderby'],
             'order' => $args['order'],
-            'meta_query' => [
+        ];
+
+        if (!empty($args['marketplace_only'])) {
+            $query_args['meta_query'] = [
                 [
                     'key' => '_wc_cgm_enabled',
                     'value' => 'yes',
                     'compare' => '=',
                 ],
-            ],
-        ];
+            ];
+        }
 
         if (!empty($args['category'])) {
             $categories = is_array($args['category']) ? $args['category'] : explode(',', $args['category']);

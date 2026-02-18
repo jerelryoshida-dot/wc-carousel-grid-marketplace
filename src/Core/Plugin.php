@@ -28,6 +28,7 @@ class Plugin {
             'logger' => Debug_Logger::get_instance(),
             'repository' => new \WC_CGM\Database\Repository(),
             'settings' => new \WC_CGM\Admin\Settings(),
+            'elementor' => new \WC_CGM\Elementor\Elementor_Manager(),
         ];
     }
 
@@ -50,10 +51,9 @@ class Plugin {
         $this->services['admin'] = new \WC_CGM\Admin\Admin_Manager();
         $this->services['frontend'] = new \WC_CGM\Frontend\Frontend_Manager();
         $this->services['woocommerce'] = new \WC_CGM\WooCommerce\WooCommerce_Hooks();
-        $this->services['elementor'] = new \WC_CGM\Elementor\Elementor_Manager();
+        $this->services['product_meta_box'] = new \WC_CGM\Admin\Product_Meta_Box();
 
         if (wc_cgm_tier_pricing_enabled()) {
-            $this->services['product_meta_box'] = new \WC_CGM\Admin\Product_Meta_Box();
             $this->services['single_product'] = new \WC_CGM\Frontend\Single_Product();
             $this->services['cart_integration'] = new \WC_CGM\Frontend\Cart_Integration();
             $this->services['order_handler'] = new \WC_CGM\WooCommerce\Order_Handler();

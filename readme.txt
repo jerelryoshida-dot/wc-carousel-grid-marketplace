@@ -4,7 +4,7 @@ Tags: woocommerce, marketplace, carousel, grid, elementor, services, tiered pric
 Requires at least: 5.8
 Tested up to: 6.4
 Requires PHP: 7.4
-Stable tag: 1.0.1
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -87,7 +87,20 @@ Yes, tiered pricing is optional and can be disabled in the plugin settings.
 
 == Changelog ==
 
+== 1.0.3 ==
+Released: 2026-02-18
 
+* Fixed Elementor widget registration timing issue
+* Fixed product meta box not loading without tier pricing enabled
+* Added marketplace_only toggle to show all WC products by default
+* Added admin notice when no products found
+* Tier pricing tables now created on activation (regardless of setting)
+* Enhanced Elementor editor preview with status indicators
+
+== 1.0.2 ==
+Released: 2026-02-18
+
+* Development update
 == 1.0.1 ==
 Released: 2026-02-18
 

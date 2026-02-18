@@ -104,6 +104,16 @@ class Marketplace_Widget extends Widget_Base {
             ],
         ]);
 
+        $this->add_control('marketplace_only', [
+            'label' => __('Marketplace Products Only', 'wc-carousel-grid-marketplace'),
+            'type' => Controls_Manager::SWITCHER,
+            'label_on' => __('Yes', 'wc-carousel-grid-marketplace'),
+            'label_off' => __('No', 'wc-carousel-grid-marketplace'),
+            'default' => 'no',
+            'separator' => 'before',
+            'description' => __('Show only products marked as marketplace, or all WooCommerce products.', 'wc-carousel-grid-marketplace'),
+        ]);
+
         $this->end_controls_section();
 
         $this->start_controls_section('layout_section', [
@@ -458,6 +468,7 @@ class Marketplace_Widget extends Widget_Base {
             'layout' => $settings['layout_type'],
             'mobile_carousel' => $settings['layout_type'] === 'hybrid' ? 'true' : 'false',
             'infinite_scroll' => $settings['infinite_scroll'] === 'yes' ? 'true' : 'false',
+            'marketplace_only' => $settings['marketplace_only'] === 'yes' ? 'true' : 'false',
         ];
 
         $shadow_class = '';
@@ -482,6 +493,7 @@ class Marketplace_Widget extends Widget_Base {
         if (settings.card_shadow !== 'none') {
             shadowClass = 'wc-cgm-shadow-' + settings.card_shadow;
         }
+        var marketplaceOnly = settings.marketplace_only === 'yes';
         #>
         <div class="wc-cgm-marketplace elementor-placeholder {{shadowClass}}">
             <div class="wc-cgm-placeholder-content">
@@ -489,6 +501,15 @@ class Marketplace_Widget extends Widget_Base {
                     <i class="eicon-products"></i>
                 </span>
                 <span><?php esc_html_e('WC Marketplace', 'wc-carousel-grid-marketplace'); ?></span>
+                <# if (marketplaceOnly) { #>
+                    <small style="display: block; margin-top: 5px; color: #72777c;">
+                        <?php esc_html_e('Showing marketplace-enabled products only', 'wc-carousel-grid-marketplace'); ?>
+                    </small>
+                <# } else { #>
+                    <small style="display: block; margin-top: 5px; color: #72777c;">
+                        <?php esc_html_e('Showing all WooCommerce products', 'wc-carousel-grid-marketplace'); ?>
+                    </small>
+                <# } #>
             </div>
         </div>
         <?php
