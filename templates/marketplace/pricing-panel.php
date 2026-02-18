@@ -34,12 +34,6 @@ $default_price = $default_tier ? ($default_price_type === 'monthly' ? $default_t
      data-tier-<?php echo esc_attr($tier->tier_level); ?>-monthly="<?php echo esc_attr($tier->monthly_price ?? 0); ?>"
      data-tier-<?php echo esc_attr($tier->tier_level); ?>-name="<?php echo esc_attr($tier->tier_name ?? ''); ?>"
      <?php endforeach; ?>>
-    
-    <div class="wc-cgm-pricing-header">
-        <?php if ($specialization) : ?>
-        <span class="wc-cgm-specialization"><?php echo esc_html($specialization); ?></span>
-        <?php endif; ?>
-    </div>
 
     <?php if (count($price_types) > 1) : ?>
     <div class="wc-cgm-price-type-selector">

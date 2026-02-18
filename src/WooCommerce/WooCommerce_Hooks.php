@@ -136,6 +136,10 @@ class WooCommerce_Hooks {
             wp_send_json_error(['message' => __('Invalid product.', 'wc-carousel-grid-marketplace')]);
         }
 
+        if (!WC()->cart) {
+            wp_send_json_error(['message' => __('Cart not available.', 'wc-carousel-grid-marketplace')]);
+        }
+
         wc_cgm_log('WC_CGM: Adding product ID: ' . $product_id);
         wc_cgm_log('WC_CGM: Tier level: ' . $tier_level);
         wc_cgm_log('WC_CGM: Price type: ' . $price_type);
@@ -163,17 +167,30 @@ class WooCommerce_Hooks {
         wc_cgm_log('WC_CGM: Cart item data:', $cart_item_data);
 
         try {
-            $result = WC()->cart->add_to_cart($product_id, $quantity, 0, [], $cart_item_data);
+            $cart_item_key = WC()->cart->add_to_cart($product_id, $quantity, 0, [], $cart_item_data);
 
-            if (is_wp_error($result)) {
-                wc_cgm_log('WC_CGM: add_to_cart WP Error: ' . $result->get_error_message());
-                wp_send_json_error(['message' => $result->get_error_message()]);
+            if (is_wp_error($cart_item_key)) {
+                wc_cgm_log('WC_CGM: add_to_cart WP Error: ' . $cart_item_key->get_error_message());
+                wp_send_json_error(['message' => $cart_item_key->get_error_message()]);
             }
 
-            wc_cgm_log('WC_CGM: Product added successfully. Cart hash: ' . WC()->cart->get_cart_hash());
+            if (!$cart_item_key) {
+                wc_cgm_log('WC_CGM: add_to_cart returned false');
+                wp_send_json_error(['message' => __('Could not add to cart.', 'wc-carousel-grid-marketplace')]);
+            }
+
+            WC()->cart->calculate_totals();
+
+            wc_cgm_log('WC_CGM: Product added successfully. Cart item key: ' . $cart_item_key);
+
+            $cart_count = WC()->cart->get_cart_contents_count();
+            $cart_total = WC()->cart->get_cart_total();
 
             wp_send_json_success([
                 'message' => __('Product added to cart!', 'wc-carousel-grid-marketplace'),
+                'cart_item_key' => $cart_item_key,
+                'cart_count' => $cart_count,
+                'cart_total' => $cart_total,
                 'cart_hash' => WC()->cart->get_cart_hash(),
             ]);
         } catch (Exception $e) {

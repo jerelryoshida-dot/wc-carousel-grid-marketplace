@@ -60,19 +60,12 @@ class Marketplace {
         <div class="wc-cgm-pricing-panel"
              data-product-id="<?php echo esc_attr($product_id); ?>"
              data-default-tier="<?php echo esc_attr($default_tier->tier_level ?? 1); ?>"
-             data-default-price-type="<?php echo esc_attr($default_price_type); ?>">
-
-            <div class="wc-cgm-pricing-header">
-                <?php if ($default_tier) : ?>
-                <span class="wc-cgm-tier-tag <?php echo esc_attr(\WC_CGM\Frontend\Marketplace::get_tier_color_class($default_tier->tier_level)); ?>">
-                    <?php echo esc_html($default_tier->tier_name); ?>
-                </span>
-                <?php endif; ?>
-
-                <?php if ($specialization) : ?>
-                <span class="wc-cgm-specialization"><?php echo esc_html($specialization); ?></span>
-                <?php endif; ?>
-            </div>
+             data-default-price-type="<?php echo esc_attr($default_price_type); ?>"
+             <?php foreach ($tiers as $tier) : ?>
+             data-tier-<?php echo esc_attr($tier->tier_level); ?>-hourly="<?php echo esc_attr($tier->hourly_price ?? 0); ?>"
+             data-tier-<?php echo esc_attr($tier->tier_level); ?>-monthly="<?php echo esc_attr($tier->monthly_price ?? 0); ?>"
+             data-tier-<?php echo esc_attr($tier->tier_level); ?>-name="<?php echo esc_attr($tier->tier_name ?? ''); ?>"
+             <?php endforeach; ?>>
 
             <?php if (count($price_types) > 1) : ?>
             <div class="wc-cgm-price-type-selector">
