@@ -1,0 +1,110 @@
+.wc-cgm-admin-wrap {
+    max-width: 900px;
+    margin: 20px 0;
+}
+
+.wc-cgm-admin-header {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
+}
+
+.wc-cgm-settings-section {
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    padding: 15px 20px;
+}
+
+.wc-cgm-settings-section h2 {
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.wc-cgm-shortcode-info {
+    background: #f7f7f7;
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.wc-cgm-shortcode-info code {
+    display: block;
+    background: #282828;
+    color: #f8f8f2;
+    padding: 10px 15px;
+    border-radius: 4px;
+    margin: 5px 0;
+    overflow-x: auto;
+}
+
+.wc-cgm-mt-2 {
+    margin-top: 15px;
+}
+
+.wc-cgm-meta-box {
+    padding: 10px 0;
+}
+
+.wc-cgm-meta-box .wc-cgm-field {
+    margin-bottom: 15px;
+}
+
+.wc-cgm-meta-box .description {
+    display: block;
+    color: #666;
+    margin-top: 5px;
+}
+
+.wc-cgm-tiers-wrap {
+    margin-top: 15px;
+}
+
+.wc-cgm-tier-row {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    padding: 15px;
+}
+
+.wc-cgm-tier-heading {
+    margin: 0 0 15px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.wc-cgm-tier-level {
+    font-weight: normal;
+    color: #888;
+    font-size: 12px;
+}
+
+.wc-cgm-tier-fields .wc-cgm-field {
+    margin-bottom: 10px;
+}
+
+.wc-cgm-tier-fields .wc-cgm-field label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.wc-cgm-field-half {
+    display: inline-block;
+    width: 48%;
+    margin-right: 2%;
+}
+
+.wc-cgm-tier-fields input[type="text"],
+.wc-cgm-tier-fields input[type="number"],
+.wc-cgm-tier-fields textarea {
+    width: 100%;
+}
+
+.wc-cgm-tier-entry { border-left: 4px solid #22c55e; }
+.wc-cgm-tier-mid { border-left: 4px solid #3b82f6; }
+.wc-cgm-tier-expert { border-left: 4px solid #a855f7; }
