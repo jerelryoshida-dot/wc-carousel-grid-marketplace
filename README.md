@@ -133,6 +133,13 @@ _Screenshots to be added_
 
 ## Changelog
 
+### 1.0.5 - 2026-02-18
+- **Bug Fix**: Fixed render_pricing_panel() missing return statement (fatal error)
+- **UI Redesign**: Removed tier dropdown, added tier badge before product title
+- **New Feature**: Global tier selection updates all visible cards without page reload
+- **Enhancement**: Products without selected tier are automatically hidden
+- **New Check**: Added return type consistency check to pre-release validation
+
 ### 1.0.4 - 2026-02-18
 - Fixed PHP syntax errors in Admin_Manager, Repository, Marketplace_Widget, and Marketplace
 - Enhanced admin settings and product meta box functionality
