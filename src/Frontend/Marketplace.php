@@ -54,6 +54,8 @@ class Marketplace {
         $default_price_type = in_array('hourly', $price_types) ? 'hourly' : ($price_types[0] ?? 'hourly');
 
         $default_price = $default_tier ? ($default_price_type === 'monthly' ? $default_tier->monthly_price : $default_tier->hourly_price) : 0;
+
+        ob_start();
 ?>
         <div class="wc-cgm-pricing-panel"
              data-product-id="<?php echo esc_attr($product_id); ?>"
@@ -150,6 +152,7 @@ class Marketplace {
             </button>
         </div>
 <?php
+        return ob_get_clean() ?: '';
     }
 
     public static function get_tier_color_class(int $tier_level): string {

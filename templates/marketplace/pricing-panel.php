@@ -28,15 +28,14 @@ $default_price = $default_tier ? ($default_price_type === 'monthly' ? $default_t
 <div class="wc-cgm-pricing-panel" 
      data-product-id="<?php echo esc_attr($product_id); ?>"
      data-default-tier="<?php echo esc_attr($default_tier->tier_level ?? 1); ?>"
-     data-default-price-type="<?php echo esc_attr($default_price_type); ?>">
+     data-default-price-type="<?php echo esc_attr($default_price_type); ?>"
+     <?php foreach ($tiers as $tier) : ?>
+     data-tier-<?php echo esc_attr($tier->tier_level); ?>-hourly="<?php echo esc_attr($tier->hourly_price ?? 0); ?>"
+     data-tier-<?php echo esc_attr($tier->tier_level); ?>-monthly="<?php echo esc_attr($tier->monthly_price ?? 0); ?>"
+     data-tier-<?php echo esc_attr($tier->tier_level); ?>-name="<?php echo esc_attr($tier->tier_name ?? ''); ?>"
+     <?php endforeach; ?>>
     
     <div class="wc-cgm-pricing-header">
-        <?php if ($default_tier) : ?>
-        <span class="wc-cgm-tier-tag <?php echo esc_attr(\WC_CGM\Frontend\Marketplace::get_tier_color_class($default_tier->tier_level)); ?>">
-            <?php echo esc_html($default_tier->tier_name); ?>
-        </span>
-        <?php endif; ?>
-        
         <?php if ($specialization) : ?>
         <span class="wc-cgm-specialization"><?php echo esc_html($specialization); ?></span>
         <?php endif; ?>
@@ -71,28 +70,9 @@ $default_price = $default_tier ? ($default_price_type === 'monthly' ? $default_t
         </span>
     </div>
 
-    <div class="wc-cgm-tier-selector-mini">
-        <select class="wc-cgm-tier-select" name="wc_cgm_tier_level">
-            <?php foreach ($tiers as $tier) : 
-                $hourly = $tier->hourly_price ?? 0;
-                $monthly = $tier->monthly_price ?? 0;
-                $show_price = $default_price_type === 'monthly' ? $monthly : $hourly;
-                if ($show_price <= 0) continue;
-            ?>
-            <option value="<?php echo esc_attr($tier->tier_level); ?>" 
-                    data-tier-name="<?php echo esc_attr($tier->tier_name); ?>"
-                    data-hourly="<?php echo esc_attr($hourly); ?>"
-                    data-monthly="<?php echo esc_attr($monthly); ?>"
-                    <?php selected($tier->tier_level, $default_tier->tier_level ?? 1); ?>>
-                <?php echo esc_html($tier->tier_name); ?> - <?php echo wc_price($show_price); ?>/<?php echo $default_price_type === 'monthly' ? 'mo' : 'hr'; ?>
-            </option>
-            <?php endforeach; ?>
-        </select>
-    </div>
-
     <div class="wc-cgm-headcount">
         <span class="wc-cgm-headcount-label"><?php esc_html_e('Headcount:', 'wc-carousel-grid-marketplace'); ?></span>
-        <button type="button" class="wc-cgm-headcount-btn wc-cgm-btn-minus" data-action="decrease">−</button>
+        <button type="button" class="wc-cgm-headcount-btn wc-cgm-btn-minus" data-action="decrease">-</button>
         <input type="number" 
                class="wc-cgm-quantity-input" 
                name="quantity" 

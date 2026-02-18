@@ -91,6 +91,42 @@ When enabled, products can have three pricing tiers:
 
 Each tier supports both monthly and hourly rates.
 
+## Tier Selection UI
+
+The marketplace features a global experience level selector that affects all product cards:
+
+```
++-------------------------------------------------------------+
+|  Experience Level:  [All] [Entry] [Mid] [Expert]            |  <- Global filter bar
++-------------------------------------------------------------+
+|  +------------------+  +------------------+                  |
+|  | [Entry] Senior   |  | [Entry] Full-Stack|                 |  <- Badge before title
+|  |     Developer    |  |     Developer     |                 |
+|  |                  |  |                   |                 |
+|  |   $1,500/mo      |  |   $2,000/mo       |                 |  <- Price for selected tier
+|  |                  |  |                   |                 |
+|  |  Headcount: [-1+]|  |  Headcount: [-1+]|                 |
+|  |  Total: $1,500   |  |  Total: $2,000    |                 |
+|  |  [Add to Cart]   |  |  [Add to Cart]    |                 |
+|  +------------------+  +------------------+                  |
++-------------------------------------------------------------+
+```
+
+### How It Works
+
+1. **Select Experience Level** - Click Entry, Mid, or Expert in the filter bar
+2. **Prices Update** - All product cards show prices for the selected tier
+3. **Badge Updates** - Tier badge appears before each product title
+4. **Products Filter** - Products without the selected tier are hidden
+
+### Experience Level Colors
+
+| Level | Color | Description |
+|-------|-------|-------------|
+| Entry | Green | Budget-friendly option |
+| Mid | Blue | Standard option |
+| Expert | Purple | Premium option |
+
 ## Screenshots
 
 _Screenshots to be added_

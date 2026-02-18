@@ -57,7 +57,52 @@
             $('.wc-cgm-tier-btn').removeClass('active');
             $this.addClass('active');
 
-            WC_CGM_Marketplace.loadProducts();
+            if (tier === 0) {
+                WC_CGM_Marketplace.loadProducts();
+            } else {
+                WC_CGM_Marketplace.updateAllPricingPanels(tier);
+            }
+        },
+
+        updateAllPricingPanels: function(tierLevel) {
+            var visibleCount = 0;
+            
+            $('.wc-cgm-card').each(function() {
+                var $card = $(this);
+                var $panel = $card.find('.wc-cgm-pricing-panel');
+                var $badge = $card.find('.wc-cgm-tier-badge');
+                
+                var hourlyPrice = parseFloat($panel.data('tier-' + tierLevel + '-hourly')) || 0;
+                var monthlyPrice = parseFloat($panel.data('tier-' + tierLevel + '-monthly')) || 0;
+                var tierName = $panel.data('tier-' + tierLevel + '-name') || '';
+                
+                if (hourlyPrice <= 0 && monthlyPrice <= 0) {
+                    $card.hide();
+                    return;
+                }
+                
+                $card.show();
+                visibleCount++;
+                
+                var priceType = $panel.find('.wc-cgm-price-type-btn.active').data('price-type') || 'monthly';
+                var newPrice = priceType === 'monthly' ? monthlyPrice : hourlyPrice;
+                
+                $panel.find('.wc-cgm-price-main')
+                    .data('price', newPrice)
+                    .html(WC_CGM_Marketplace.formatPrice(newPrice));
+                
+                $panel.find('.wc-cgm-add-to-cart').data('tier-level', tierLevel);
+                
+                var badgeClass = ['entry', 'mid', 'expert'][tierLevel - 1] || 'default';
+                $badge
+                    .removeClass('entry mid expert default')
+                    .addClass(badgeClass)
+                    .text(tierName);
+                
+                $panel.find('.wc-cgm-quantity-input').trigger('change');
+            });
+            
+            WC_CGM_Marketplace.updateSectionHeader(visibleCount);
         },
 
         loadProducts: function() {
@@ -208,24 +253,6 @@
                 }
             });
         },
-                success: function(response) {
-                    if (response.success) {
-                        $btn.find('.wc-cgm-btn-text').text(wc_cgm_ajax.i18n.added_to_cart);
-                        $(document.body).trigger('wc_fragment_refresh');
-
-                        setTimeout(function() {
-                            $btn.find('.wc-cgm-btn-text').text('Add to Cart');
-                        }, 2000);
-                    } else {
-                        alert(response.data.message || wc_cgm_ajax.i18n.error);
-                        $btn.find('.wc-cgm-btn-text').text('Add to Cart');
-                    }
-                },
-                complete: function() {
-                    $btn.removeClass('loading');
-                }
-            });
-        },
 
         updateQuantity: function(e) {
             e.preventDefault();
@@ -285,7 +312,16 @@
 
             $panel.find('.wc-cgm-add-to-cart').data('price-type', priceType);
 
-            $panel.find('.wc-cgm-tier-select').trigger('change');
+            var currentTier = parseInt($panel.find('.wc-cgm-add-to-cart').data('tier-level')) || 1;
+            var hourlyPrice = parseFloat($panel.data('tier-' + currentTier + '-hourly')) || 0;
+            var monthlyPrice = parseFloat($panel.data('tier-' + currentTier + '-monthly')) || 0;
+            var newPrice = priceType === 'monthly' ? monthlyPrice : hourlyPrice;
+            
+            $panel.find('.wc-cgm-price-main')
+                .data('price', newPrice)
+                .html(WC_CGM_Marketplace.formatPrice(newPrice));
+            
+            $panel.find('.wc-cgm-quantity-input').trigger('change');
         },
 
         updateSectionHeader: function(count) {
