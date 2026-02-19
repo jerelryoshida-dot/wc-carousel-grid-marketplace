@@ -107,13 +107,13 @@ class Marketplace {
                 <span class="wc-cgm-price-sub">
                     <?php if ($default_price_type === 'monthly') : ?>
                         <?php
-                        $hourly_equiv = $default_price / 160;
-                        echo wc_price(number_format($hourly_equiv, 2, '.', '')) . '/hr';
+                        $hourly_price = $default_tier->hourly_price ?? 0;
+                        echo wc_price(number_format($hourly_price, 2, '.', '')) . '/hr';
                         ?>
                     <?php else : ?>
                         <?php
-                        $monthly_equiv = $default_price * 160;
-                        echo wc_price(number_format($monthly_equiv, 2, '.', '')) . '/mo';
+                        $monthly_price = $default_tier->monthly_price ?? 0;
+                        echo wc_price(number_format($monthly_price, 2, '.', '')) . '/mo';
                         ?>
                     <?php endif; ?>
                 </span>

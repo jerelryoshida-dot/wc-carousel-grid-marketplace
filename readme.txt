@@ -4,7 +4,7 @@ Tags: woocommerce, marketplace, carousel, grid, elementor, services, tiered pric
 Requires at least: 5.8
 Tested up to: 6.4
 Requires PHP: 7.4
-Stable tag: 1.0.25
+Stable tag: 1.0.26
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,6 +86,12 @@ Yes! There's a native Elementor widget with full design controls.
 Yes, tiered pricing is optional and can be disabled in the plugin settings.
 
 == Changelog ==
+
+== 1.0.26 ==
+Released: 2026-02-19
+
+* **Fixed**: Price display now uses actual database values instead of calculated conversions
+* **Fixed**: Monthly/Hourly prices no longer incorrectly calculated (e.g., 1200 showing as 1280)
 
 == 1.0.25 ==
 Released: 2026-02-19

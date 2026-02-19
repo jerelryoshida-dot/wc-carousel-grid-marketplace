@@ -364,11 +364,9 @@
             $panel.find('.wc-cgm-total-price').data('monthly-price', monthlyPrice);
             
             if (priceType === 'monthly') {
-                var hourlyEquiv = monthlyPrice / 160;
-                $panel.find('.wc-cgm-price-sub').html(WC_CGM_Marketplace.formatPrice(hourlyEquiv) + '/hr');
+                $panel.find('.wc-cgm-price-sub').html(WC_CGM_Marketplace.formatPrice(hourlyPrice) + '/hr');
             } else {
-                var monthlyEquiv = hourlyPrice * 160;
-                $panel.find('.wc-cgm-price-sub').html(WC_CGM_Marketplace.formatPrice(monthlyEquiv) + '/mo');
+                $panel.find('.wc-cgm-price-sub').html(WC_CGM_Marketplace.formatPrice(monthlyPrice) + '/mo');
             }
             
             $panel.find('.wc-cgm-quantity-input').trigger('change');
