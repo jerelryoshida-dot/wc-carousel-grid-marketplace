@@ -19,6 +19,14 @@
             this.bindEvents();
             this.initCarousel();
             this.initDefaultTier();
+            
+            var $activeBtn = $('.wc-cgm-tier-btn.active');
+            if ($activeBtn.length) {
+                var activeTier = parseInt($activeBtn.data('tier')) || 1;
+                if (activeTier > 0) {
+                    this.updateAllPricingPanels(activeTier);
+                }
+            }
         },
 
         initDefaultTier: function() {
