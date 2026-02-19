@@ -3,7 +3,7 @@
  * Plugin Name: WooCommerce Carousel/Grid Marketplace
  * Plugin URI: https://github.com/Jerel-R-Yoshida/wc-carousel-grid-marketplace
  * Description: Service marketplace with carousel/grid layout, optional tiered pricing, and Elementor compatibility.
- * Version: 1.0.15
+ * Version: 1.0.17
  * Author: Jerel Yoshida
  * Author URI: https://github.com/Jerel-R-Yoshida
  * Text Domain: wc-carousel-grid-marketplace
@@ -29,7 +29,7 @@ if (!defined('WP_DEBUG_DISPLAY')) {
     define('WP_DEBUG_DISPLAY', false);  // Don't show errors on screen
 }
 
-define('WC_CGM_VERSION', '1.0.14');
+define('WC_CGM_VERSION', '1.0.17');
 define('WC_CGM_PLUGIN_FILE', __FILE__);
 define('WC_CGM_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('WC_CGM_PLUGIN_URL', plugin_dir_url(__FILE__));
@@ -37,22 +37,24 @@ define('WC_CGM_PLUGIN_BASENAME', plugin_basename(__FILE__));
 define('WC_CGM_TABLE_TIERS', 'welp_product_tiers');
 define('WC_CGM_TABLE_SALES', 'welp_order_tier_sales');
 
-spl_autoload_register('wc_cgm_autoloader');
+if (!function_exists('wc_cgm_autoloader')) {
+    spl_autoload_register('wc_cgm_autoloader');
 
-function wc_cgm_autoloader($class) {
-    $prefix = 'WC_CGM\\';
-    $base_dir = WC_CGM_PLUGIN_DIR . 'src/';
+    function wc_cgm_autoloader($class) {
+        $prefix = 'WC_CGM\\';
+        $base_dir = WC_CGM_PLUGIN_DIR . 'src/';
 
-    $len = strlen($prefix);
-    if (strncmp($prefix, $class, $len) !== 0) {
-        return;
-    }
+        $len = strlen($prefix);
+        if (strncmp($prefix, $class, $len) !== 0) {
+            return;
+        }
 
-    $relative_class = substr($class, $len);
-    $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
+        $relative_class = substr($class, $len);
+        $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
 
-    if (file_exists($file)) {
-        require $file;
+        if (file_exists($file)) {
+            require $file;
+        }
     }
 }
 

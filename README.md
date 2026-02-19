@@ -133,6 +133,23 @@ _Screenshots to be added_
 
 ## Changelog
 
+### 1.0.17 - 2026-02-19
+* Fixed: Fatal error "Cannot redeclare wc_cgm_autoloader()" when multiple plugin versions installed
+* Added: function_exists() check to prevent autoloader redeclaration conflicts
+
+### 1.0.16 - 2026-02-19
+* Fixed: Total price now always displays with monthly (/mo) suffix regardless of price type toggle
+* Improved: Cleaner total display - quantity still updates total but suffix stays consistent
+
+### 1.0.15 - 2026-02-19
+* Fixed: Total price now always displays with monthly (/mo) suffix regardless of price type toggle
+* Improved: Cleaner total display - quantity still updates total but suffix stays consistent
+
+### 1.0.14 - 2026-02-19
+* Fixed price type button toggle: Active button now shows green with !important CSS
+* Fixed total display to show /mo or /hr based on selected price type
+* Enhanced price type switching with proper AJAX updates
+
 ### 1.0.13 - 2026-02-19
 * Price type buttons: Active=Green, Inactive=Red
 * Total always shows monthly cost regardless of button selection
