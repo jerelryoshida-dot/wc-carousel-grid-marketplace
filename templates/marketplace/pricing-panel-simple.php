@@ -48,17 +48,17 @@ $default_price = $default_price_type === 'monthly' ? $monthly_price : $hourly_pr
      <?php endforeach; ?>>
 
     <?php if (count($price_types) > 1) : ?>
-    <div class="wc-cgm-price-type-selector">
-        <button type="button"
-                class="wc-cgm-price-type-btn <?php echo $default_price_type === 'monthly' ? 'active' : ''; ?>"
-                data-price-type="monthly">
+    <div class="wc-cgm-price-type-switch">
+        <span class="wc-cgm-switch-label <?php echo $default_price_type === 'monthly' ? 'active' : ''; ?>">
             <?php esc_html_e('Monthly', 'wc-carousel-grid-marketplace'); ?>
-        </button>
-        <button type="button"
-                class="wc-cgm-price-type-btn <?php echo $default_price_type === 'hourly' ? 'active' : ''; ?>"
-                data-price-type="hourly">
+        </span>
+        <label class="wc-cgm-switch">
+            <input type="checkbox" class="wc-cgm-switch-input" <?php checked($default_price_type, 'hourly'); ?>>
+            <span class="wc-cgm-switch-slider"></span>
+        </label>
+        <span class="wc-cgm-switch-label <?php echo $default_price_type === 'hourly' ? 'active' : ''; ?>">
             <?php esc_html_e('Hourly', 'wc-carousel-grid-marketplace'); ?>
-        </button>
+        </span>
     </div>
     <?php endif; ?>
 

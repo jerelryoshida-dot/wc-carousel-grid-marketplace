@@ -89,14 +89,17 @@ class Marketplace {
 
             <?php if (count($price_types) > 1) : ?>
             <h4 class="wc-cgm-tier-description"><?php echo esc_html($default_tier_description); ?></h4>
-            <div class="wc-cgm-price-type-selector">
-                <?php foreach ($price_types as $type) : ?>
-                <button type="button"
-                        class="wc-cgm-price-type-btn <?php echo $type === $default_price_type ? 'active' : ''; ?>"
-                        data-price-type="<?php echo esc_attr($type); ?>">
-                    <?php echo esc_html($type === 'monthly' ? __('Monthly', 'wc-carousel-grid-marketplace') : __('Hourly', 'wc-carousel-grid-marketplace')); ?>
-                </button>
-                <?php endforeach; ?>
+            <div class="wc-cgm-price-type-switch">
+                <span class="wc-cgm-switch-label <?php echo $default_price_type === 'monthly' ? 'active' : ''; ?>">
+                    <?php esc_html_e('Monthly', 'wc-carousel-grid-marketplace'); ?>
+                </span>
+                <label class="wc-cgm-switch">
+                    <input type="checkbox" class="wc-cgm-switch-input" <?php checked($default_price_type, 'hourly'); ?>>
+                    <span class="wc-cgm-switch-slider"></span>
+                </label>
+                <span class="wc-cgm-switch-label <?php echo $default_price_type === 'hourly' ? 'active' : ''; ?>">
+                    <?php esc_html_e('Hourly', 'wc-carousel-grid-marketplace'); ?>
+                </span>
             </div>
             <?php endif; ?>
 

@@ -68,7 +68,7 @@
             $(document).on('click', '.wc-cgm-headcount-btn', this.updateQuantity);
             $(document).on('change', '.wc-cgm-quantity-input', this.updateTotal);
             $(document).on('change', '.wc-cgm-tier-select', this.updateTierPrice);
-            $(document).on('click', '.wc-cgm-price-type-btn', this.updatePriceType);
+            $(document).on('change', '.wc-cgm-switch-input', this.updatePriceType);
             $(document).on('click', '.wc-cgm-load-more', this.loadMore);
             $(document).on('input', '.wc-cgm-search-input', this.debounce(this.searchProducts, 300));
         },
@@ -127,7 +127,7 @@
                 $card.show();
                 visibleCount++;
                 
-                var priceType = $panel.find('.wc-cgm-price-type-btn.active').data('price-type') || 'monthly';
+                var priceType = $panel.find('.wc-cgm-switch-input').is(':checked') ? 'hourly' : 'monthly';
                 var newPrice = priceType === 'monthly' ? monthlyPrice : hourlyPrice;
                 
                 $panel.find('.wc-cgm-price-main')
@@ -276,7 +276,7 @@
 
             var productId = $btn.data('product-id');
             var tierLevel = parseInt($btn.data('tier-level')) || 0;
-            var priceType = $panel.find('.wc-cgm-price-type-btn.active').data('price-type') || $panel.data('default-price-type') || 'monthly';
+            var priceType = $panel.find('.wc-cgm-switch-input').is(':checked') ? 'hourly' : ($panel.data('default-price-type') || 'monthly');
             var quantity = parseInt($panel.find('.wc-cgm-quantity-input').val()) || 1;
 
             WC_CGM_Marketplace.log('Add to cart:', { productId, tierLevel, priceType, quantity });
@@ -382,7 +382,7 @@
 
             var hourlyPrice = parseFloat($option.data('hourly')) || 0;
             var monthlyPrice = parseFloat($option.data('monthly')) || 0;
-            var priceType = $panel.find('.wc-cgm-price-type-btn.active').data('price-type') || 'hourly';
+            var priceType = $panel.find('.wc-cgm-switch-input').is(':checked') ? 'hourly' : 'monthly';
 
             var price = priceType === 'monthly' ? monthlyPrice : hourlyPrice;
 
@@ -395,12 +395,12 @@
         },
 
         updatePriceType: function(e) {
-            var $btn = $(this);
-            var $panel = $btn.closest('.wc-cgm-pricing-panel');
-            var priceType = $btn.data('price-type');
+            var $input = $(this);
+            var $panel = $input.closest('.wc-cgm-pricing-panel');
+            var priceType = $input.is(':checked') ? 'hourly' : 'monthly';
 
-            $panel.find('.wc-cgm-price-type-btn').removeClass('active');
-            $btn.addClass('active');
+            $panel.find('.wc-cgm-switch-label').removeClass('active');
+            $panel.find('.wc-cgm-switch-label').eq(priceType === 'hourly' ? 2 : 0).addClass('active');
 
             $panel.find('.wc-cgm-add-to-cart').data('price-type', priceType);
 
