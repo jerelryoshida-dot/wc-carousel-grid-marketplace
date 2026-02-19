@@ -42,11 +42,11 @@ foreach ($tiers as $tier) {
 
     <p class="wc-cgm-card-desc">
         <?php
-        $excerpt = $product->get_short_description();
-        if ($excerpt) {
-            echo esc_html(wp_trim_words($excerpt, 20, '...'));
+        $description = $product->get_description();
+        if ($description) {
+            echo esc_html(wp_trim_words($description, 30, '...'));
         } else {
-            echo esc_html(wp_trim_words($product->get_description(), 20, '...'));
+            echo esc_html(wp_trim_words($product->get_short_description(), 30, '...'));
         }
         ?>
     </p>
