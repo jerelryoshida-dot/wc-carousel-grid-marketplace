@@ -26,7 +26,6 @@ class Plugin {
 
     private function register_core_services(): void {
         $this->services = [
-            'logger' => Debug_Logger::get_instance(),
             'repository' => new \WC_CGM\Database\Repository(),
             'settings' => new \WC_CGM\Admin\Settings(),
             'elementor' => new \WC_CGM\Elementor\Elementor_Manager(),
@@ -59,12 +58,6 @@ class Plugin {
         $this->services['frontend'] = new \WC_CGM\Frontend\Frontend_Manager();
         $this->services['woocommerce'] = new \WC_CGM\WooCommerce\WooCommerce_Hooks();
         $this->services['product_meta_box'] = new \WC_CGM\Admin\Product_Meta_Box();
-
-        if (wc_cgm_tier_pricing_enabled()) {
-            $this->services['single_product'] = new \WC_CGM\Frontend\Single_Product();
-            $this->services['cart_integration'] = new \WC_CGM\Frontend\Cart_Integration();
-            $this->services['order_handler'] = new \WC_CGM\WooCommerce\Order_Handler();
-        }
     }
 
     public function register_woocommerce_services_fallback(): void {
@@ -125,7 +118,6 @@ class Plugin {
         wp_localize_script('wc-cgm-marketplace', 'wc_cgm_ajax', [
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('wc_cgm_frontend_nonce'),
-            'tier_pricing_enabled' => wc_cgm_tier_pricing_enabled(),
             'i18n' => [
                 'added_to_cart' => __('Added to cart!', 'wc-carousel-grid-marketplace'),
                 'error' => __('An error occurred. Please try again.', 'wc-carousel-grid-marketplace'),
@@ -146,7 +138,7 @@ class Plugin {
 
     private function enqueue_admin_assets(string $hook): void {
         $screen = get_current_screen();
-        
+
         if ($screen && $screen->post_type === 'product') {
             wp_enqueue_style(
                 'wc-cgm-admin',

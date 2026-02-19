@@ -12,10 +12,6 @@ class Marketplace {
     }
 
     public static function render_filter_bar(array $atts): string {
-        if (!wc_cgm_tier_pricing_enabled()) {
-            return '';
-        }
-
         ob_start();
         include WC_CGM_PLUGIN_DIR . 'templates/marketplace/filter-bar.php';
         return ob_get_clean() ?: '';
@@ -24,8 +20,8 @@ class Marketplace {
     public static function render_product_card(\WC_Product $product, array $atts, $repository): string {
         $product_id = $product->get_id();
         $is_popular = wc_cgm_is_popular($product_id);
-        $specialization = get_post_meta($product_id, '_welp_specialization', true);
-        $tiers = wc_cgm_tier_pricing_enabled() ? $repository->get_tiers_by_product($product_id) : [];
+        $specialization = $repository->get_specialization($product_id);
+        $tiers = $repository->get_tiers_by_product($product_id);
 
         ob_start();
         include WC_CGM_PLUGIN_DIR . 'templates/marketplace/product-card.php';
@@ -34,7 +30,9 @@ class Marketplace {
 
     public static function render_pricing_panel(\WC_Product $product, array $tiers, array $atts): string {
         $product_id = $product->get_id();
-        $specialization = get_post_meta($product_id, '_welp_specialization', true);
+        $plugin = wc_cgm();
+        $repository = $plugin->get_service('repository');
+        $specialization = $repository ? $repository->get_specialization($product_id) : '';
         $tiers = $tiers ?? [];
 
         $tier_data = [
@@ -108,14 +106,14 @@ class Marketplace {
                 </span>
                 <span class="wc-cgm-price-sub">
                     <?php if ($default_price_type === 'monthly') : ?>
-                        <?php 
+                        <?php
                         $hourly_equiv = $default_price / 160;
-                        echo wc_price(number_format($hourly_equiv, 2, '.', '')) . '/hr'; 
+                        echo wc_price(number_format($hourly_equiv, 2, '.', '')) . '/hr';
                         ?>
                     <?php else : ?>
-                        <?php 
+                        <?php
                         $monthly_equiv = $default_price * 160;
-                        echo wc_price(number_format($monthly_equiv, 2, '.', '')) . '/mo'; 
+                        echo wc_price(number_format($monthly_equiv, 2, '.', '')) . '/mo';
                         ?>
                     <?php endif; ?>
                 </span>
