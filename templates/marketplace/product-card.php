@@ -22,7 +22,7 @@ foreach ($tiers as $tier) {
 ?>
 
 <div class="wc-cgm-card" data-product-id="<?php echo esc_attr($product_id); ?>" <?php echo !empty($tiers) ? 'data-has-tiers="true"' : ''; ?>>
-    
+
     <?php if ($is_popular) : ?>
     <span class="wc-cgm-badge-popular">
         <?php esc_html_e('Popular', 'wc-carousel-grid-marketplace'); ?>
@@ -34,7 +34,7 @@ foreach ($tiers as $tier) {
         <a href="<?php echo esc_url($product->get_permalink()); ?>">
             <?php if (!empty($tiers) && $default_tier && isset($tier_badges[$default_tier->tier_level])) : ?>
             <span class="wc-cgm-tier-badge <?php echo esc_attr($tier_classes[$default_tier->tier_level] ?? 'default'); ?>">
-                <?php echo esc_html($tier_badges[$default_tier->tier_level]); ?>      
+                <?php echo esc_html($tier_badges[$default_tier->tier_level]); ?>
             </span>
             <?php endif; ?>
         </a>

@@ -85,7 +85,7 @@ class Admin_Manager {
         ?>
         <div class="wrap wc-cgm-admin-wrap">
             <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
-            
+
             <div class="wc-cgm-admin-header">
                 <p class="description">
                     <?php esc_html_e('Configure the WooCommerce Carousel/Grid Marketplace settings.', 'wc-carousel-grid-marketplace'); ?>
@@ -97,7 +97,7 @@ class Admin_Manager {
 
                 <div class="wc-cgm-settings-section">
                     <h2><?php esc_html_e('General Settings', 'wc-carousel-grid-marketplace'); ?></h2>
-                    
+
                     <table class="form-table">
                         <tr>
                             <th scope="row"><?php esc_html_e('Grid Columns', 'wc-carousel-grid-marketplace'); ?></th>
@@ -217,7 +217,7 @@ class Admin_Manager {
 
                 <div class="wc-cgm-settings-section">
                     <h2><?php esc_html_e('Tier Pricing', 'wc-carousel-grid-marketplace'); ?></h2>
-                    
+
                     <table class="form-table">
                         <tr>
                             <th scope="row"><?php esc_html_e('Enable Tier Pricing', 'wc-carousel-grid-marketplace'); ?></th>
@@ -234,7 +234,7 @@ class Admin_Manager {
 
                 <div class="wc-cgm-settings-section">
                     <h2><?php esc_html_e('Popular Badge', 'wc-carousel-grid-marketplace'); ?></h2>
-                    
+
                     <table class="form-table">
                         <tr>
                             <th scope="row"><?php esc_html_e('Popular Method', 'wc-carousel-grid-marketplace'); ?></th>
@@ -265,14 +265,14 @@ class Admin_Manager {
 
                 <div class="wc-cgm-settings-section">
                     <h2><?php esc_html_e('Shortcode Usage', 'wc-carousel-grid-marketplace'); ?></h2>
-                    
+
                     <div class="wc-cgm-shortcode-info">
                         <p><strong><?php esc_html_e('Basic Usage:', 'wc-carousel-grid-marketplace'); ?></strong></p>
                         <code>[wc_cgm_marketplace]</code>
-                        
+
                         <p class="wc-cgm-mt-2"><strong><?php esc_html_e('With Parameters:', 'wc-carousel-grid-marketplace'); ?></strong></p>
                         <code>[wc_cgm_marketplace columns="4" category="15" limit="8" show_sidebar="false"]</code>
-                        
+
                         <p class="wc-cgm-mt-2"><strong><?php esc_html_e('Elementor:', 'wc-carousel-grid-marketplace'); ?></strong></p>
                         <p><?php esc_html_e('Use the native "WC Marketplace" widget in Elementor for full visual controls.', 'wc-carousel-grid-marketplace'); ?></p>
                     </div>
@@ -280,7 +280,7 @@ class Admin_Manager {
 
                 <div class="wc-cgm-settings-section">
                     <h2><?php esc_html_e('Data Management', 'wc-carousel-grid-marketplace'); ?></h2>
-                    
+
                     <table class="form-table">
                         <tr>
                             <th scope="row"><?php esc_html_e('Remove Data on Uninstall', 'wc-carousel-grid-marketplace'); ?></th>

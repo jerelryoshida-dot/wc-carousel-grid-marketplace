@@ -20,18 +20,18 @@ $class = $atts['class'] ?? '';
 <?php echo $admin_notice; ?>
 <?php endif; ?>
 
-<div class="wc-cgm-marketplace <?php echo esc_attr($class); ?>" 
+<div class="wc-cgm-marketplace <?php echo esc_attr($class); ?>"
      data-columns="<?php echo esc_attr($columns); ?>"
      data-layout="<?php echo esc_attr($layout); ?>"
      data-mobile-carousel="<?php echo esc_attr($mobile_carousel ? 'true' : 'false'); ?>">
-    
+
     <?php if ($show_sidebar && !empty($categories)) : ?>
     <aside class="wc-cgm-sidebar">
         <div class="wc-cgm-sidebar-header">
             <h3><?php esc_html_e('Service Categories', 'wc-carousel-grid-marketplace'); ?></h3>
             <p><?php esc_html_e('Browse by expertise area', 'wc-carousel-grid-marketplace'); ?></p>
         </div>
-        
+
         <?php echo \WC_CGM\Frontend\Marketplace::render_sidebar($categories, $atts); ?>
     </aside>
     <?php endif; ?>
@@ -39,8 +39,8 @@ $class = $atts['class'] ?? '';
     <main class="wc-cgm-content">
         <?php if ($show_search) : ?>
         <div class="wc-cgm-search-bar">
-            <input type="search" 
-                   class="wc-cgm-search-input" 
+            <input type="search"
+                   class="wc-cgm-search-input"
                    placeholder="<?php esc_attr_e('Search services...', 'wc-carousel-grid-marketplace'); ?>"
                    aria-label="<?php esc_attr_e('Search services', 'wc-carousel-grid-marketplace'); ?>">
             <button type="button" class="wc-cgm-search-btn">
@@ -56,25 +56,25 @@ $class = $atts['class'] ?? '';
         <div class="wc-cgm-section-header">
             <h2 class="wc-cgm-section-title"><?php esc_html_e('Available Services', 'wc-carousel-grid-marketplace'); ?></h2>
             <p class="wc-cgm-section-count">
-                <?php 
+                <?php
                 printf(
                     _n('%s role available', '%s roles available', count($products), 'wc-carousel-grid-marketplace'),
                     number_format_i18n(count($products))
-                ); 
+                );
                 ?>
             </p>
         </div>
 
-        <div class="wc-cgm-grid <?php echo $layout === 'hybrid' ? 'wc-cgm-hybrid' : ''; ?>" 
+        <div class="wc-cgm-grid <?php echo $layout === 'hybrid' ? 'wc-cgm-hybrid' : ''; ?>"
              data-current-category="0"
              data-current-tier="0">
-            
-            <?php foreach ($products as $product_id) : 
+
+            <?php foreach ($products as $product_id) :
                 $product = wc_get_product($product_id);
                 if (!$product) continue;
                 echo \WC_CGM\Frontend\Marketplace::render_product_card($product, $atts, $repository);
             endforeach; ?>
-            
+
         </div>
 
         <?php if (empty($products)) : ?>

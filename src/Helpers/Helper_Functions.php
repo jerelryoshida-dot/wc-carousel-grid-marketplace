@@ -8,12 +8,11 @@ function wc_cgm(): \WC_CGM\Core\Plugin {
     return \WC_CGM\Core\Plugin::get_instance();
 }
 
-function wc_cgm_tier_pricing_enabled(): bool {
-    return (bool) get_option('wc_cgm_enable_tier_pricing', false);
-}
-
 function wc_cgm_is_marketplace_product(int $product_id): bool {
-    return get_post_meta($product_id, '_wc_cgm_enabled', true) === 'yes';
+    if (function_exists('welp_is_enabled')) {
+        return \welp_is_enabled($product_id);
+    }
+    return false;
 }
 
 function wc_cgm_is_popular(int $product_id): bool {
@@ -37,16 +36,10 @@ function wc_cgm_is_popular(int $product_id): bool {
 }
 
 function wc_cgm_get_tiers(int $product_id): array {
-    if (!wc_cgm_tier_pricing_enabled()) {
-        return [];
+    if (function_exists('welp_get_instance')) {
+        $repo = \welp_get_instance()->get_service('repository');
+        return $repo ? $repo->get_tiers_by_product($product_id) : [];
     }
-
-    $plugin = wc_cgm();
-    $repository = $plugin->get_service('repository');
-    if ($repository) {
-        return $repository->get_tiers_by_product($product_id);
-    }
-
     return [];
 }
 
@@ -63,9 +56,8 @@ function wc_cgm_format_price(float $price, string $type = ''): string {
 }
 
 function wc_cgm_log(string $message, array $context = []): void {
-    if (defined('WP_DEBUG') && WP_DEBUG) {
-        $logger = \WC_CGM\Core\Debug_Logger::get_instance();
-        $logger->debug($message, $context);
+    if (function_exists('welp_debug')) {
+        \welp_debug('[CGM] ' . $message, $context);
     }
 }
 
