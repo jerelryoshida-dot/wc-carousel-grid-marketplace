@@ -12,6 +12,9 @@ class WooCommerce_Hooks {
         add_action('woocommerce_order_status_processing', [$this, 'record_sale']);
         add_action('woocommerce_order_status_completed', [$this, 'record_sale']);
 
+        add_filter('woocommerce_add_cart_item_data', [$this, 'add_welp_compatible_meta'], 10, 3);
+        add_action('woocommerce_checkout_create_order_line_item', [$this, 'add_tier_to_order_item'], 10, 4);
+
         add_action('wp_ajax_wc_cgm_filter_products', [$this, 'ajax_filter_products']);
         add_action('wp_ajax_nopriv_wc_cgm_filter_products', [$this, 'ajax_filter_products']);
         add_action('wp_ajax_wc_cgm_add_to_cart', [$this, 'ajax_add_to_cart']);
@@ -20,6 +23,14 @@ class WooCommerce_Hooks {
         add_action('wp_ajax_nopriv_wc_cgm_load_more', [$this, 'ajax_load_more']);
         add_action('wp_ajax_wc_cgm_search_products', [$this, 'ajax_search_products']);
         add_action('wp_ajax_nopriv_wc_cgm_search_products', [$this, 'ajax_search_products']);
+    }
+
+    private function log(string $message, array $context = []): void {
+        if (function_exists('wc_cgm_log')) {
+            wc_cgm_log($message, $context);
+        } else {
+            error_log('[WC_CGM] ' . $message . ' | ' . wp_json_encode($context));
+        }
     }
 
     public function update_cart_item_price(\WC_Cart $cart): void {
@@ -125,18 +136,35 @@ class WooCommerce_Hooks {
         $tier_level = isset($_POST['tier_level']) ? absint($_POST['tier_level']) : 0;
         $price_type = isset($_POST['price_type']) ? sanitize_text_field($_POST['price_type']) : 'monthly';
 
+        $this->log('AJAX add_to_cart START', [
+            'product_id' => $product_id,
+            'quantity' => $quantity,
+            'tier_level' => $tier_level,
+            'price_type' => $price_type,
+            'is_marketplace_product' => function_exists('wc_cgm_is_marketplace_product') ? wc_cgm_is_marketplace_product($product_id) : 'function not exists',
+            'welp_enabled' => function_exists('welp_is_enabled') ? welp_is_enabled($product_id) : 'function not exists',
+            'POST_data' => $_POST,
+        ]);
+
         if ($product_id <= 0) {
+            $this->log('ERROR: Invalid product_id', ['product_id' => $product_id]);
             wp_send_json_error(['message' => __('Invalid product.', 'wc-carousel-grid-marketplace')]);
+            return;
         }
 
         if (!WC()->cart) {
+            $this->log('ERROR: Cart not available');
             wp_send_json_error(['message' => __('Cart not available.', 'wc-carousel-grid-marketplace')]);
+            return;
         }
 
         $cart_item_data = [];
 
         if (wc_cgm_is_marketplace_product($product_id)) {
+            $this->log('Product is marketplace product', ['product_id' => $product_id, 'tier_level' => $tier_level]);
+
             if ($tier_level <= 0) {
+                $this->log('ERROR: No tier level selected', ['product_id' => $product_id]);
                 wp_send_json_error([
                     'message' => __('Please select an experience level before adding to cart.', 'wc-carousel-grid-marketplace')
                 ]);
@@ -147,7 +175,15 @@ class WooCommerce_Hooks {
             $repository = $plugin->get_service('repository');
             $tier = $repository->get_tier($product_id, $tier_level);
 
+            $this->log('Tier lookup result', [
+                'product_id' => $product_id,
+                'tier_level' => $tier_level,
+                'tier_found' => $tier ? 'yes' : 'no',
+                'tier_data' => $tier ? (array) $tier : null,
+            ]);
+
             if (!$tier) {
+                $this->log('ERROR: Tier not found', ['product_id' => $product_id, 'tier_level' => $tier_level]);
                 wp_send_json_error([
                     'message' => __('Selected experience level is not available for this product.', 'wc-carousel-grid-marketplace')
                 ]);
@@ -157,6 +193,7 @@ class WooCommerce_Hooks {
             $price = $price_type === 'monthly' ? $tier->monthly_price : $tier->hourly_price;
 
             if ($price <= 0) {
+                $this->log('ERROR: Price is 0 or negative', ['price' => $price, 'price_type' => $price_type]);
                 wp_send_json_error([
                     'message' => __('Selected pricing option is not available for this experience level.', 'wc-carousel-grid-marketplace')
                 ]);
@@ -169,23 +206,51 @@ class WooCommerce_Hooks {
                 'price' => (float) $price,
                 'price_type' => $price_type,
             ];
+
+            $cart_item_data['_welp_tier_level'] = $tier_level;
+            $cart_item_data['_welp_tier_price'] = (float) $price;
+            $cart_item_data['_welp_tier_price_type'] = $price_type;
+            $cart_item_data['_welp_tier_name'] = $tier->tier_name;
+
+            $this->log('Cart item data prepared', ['cart_item_data' => $cart_item_data]);
         }
+
+        $this->log('Calling WC()->cart->add_to_cart', [
+            'product_id' => $product_id,
+            'quantity' => $quantity,
+            'cart_item_data' => $cart_item_data,
+        ]);
 
         try {
             $cart_item_key = WC()->cart->add_to_cart($product_id, $quantity, 0, [], $cart_item_data);
 
+            $this->log('add_to_cart result', [
+                'cart_item_key' => $cart_item_key,
+                'is_wp_error' => is_wp_error($cart_item_key),
+                'is_false' => $cart_item_key === false,
+            ]);
+
             if (is_wp_error($cart_item_key)) {
+                $this->log('ERROR: WP_Error returned', ['error' => $cart_item_key->get_error_message()]);
                 wp_send_json_error(['message' => $cart_item_key->get_error_message()]);
+                return;
             }
 
             if (!$cart_item_key) {
+                $this->log('ERROR: add_to_cart returned false');
                 wp_send_json_error(['message' => __('Could not add to cart.', 'wc-carousel-grid-marketplace')]);
+                return;
             }
 
             WC()->cart->calculate_totals();
 
             $cart_count = WC()->cart->get_cart_contents_count();
             $cart_total = WC()->cart->get_cart_total();
+
+            $this->log('SUCCESS: Product added to cart', [
+                'cart_item_key' => $cart_item_key,
+                'cart_count' => $cart_count,
+            ]);
 
             wp_send_json_success([
                 'message' => __('Product added to cart!', 'wc-carousel-grid-marketplace'),
@@ -194,9 +259,59 @@ class WooCommerce_Hooks {
                 'cart_total' => $cart_total,
                 'cart_hash' => WC()->cart->get_cart_hash(),
             ]);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
+            $this->log('EXCEPTION in add_to_cart', ['exception' => $e->getMessage()]);
             wp_send_json_error(['message' => $e->getMessage()]);
         }
+    }
+
+    public function add_welp_compatible_meta(array $cart_item_data, int $product_id, int $variation_id): array {
+        $this->log('add_welp_compatible_meta filter called', [
+            'product_id' => $product_id,
+            'variation_id' => $variation_id,
+            'incoming_cart_item_data' => $cart_item_data,
+            'has_wc_cgm_tier' => isset($cart_item_data['wc_cgm_tier']),
+        ]);
+
+        if (!isset($cart_item_data['wc_cgm_tier'])) {
+            return $cart_item_data;
+        }
+
+        $tier = $cart_item_data['wc_cgm_tier'];
+
+        $cart_item_data['_welp_tier_level'] = $tier['level'];
+        $cart_item_data['_welp_tier_price'] = $tier['price'];
+        $cart_item_data['_welp_tier_price_type'] = $tier['price_type'];
+        $cart_item_data['_welp_tier_name'] = $tier['name'];
+
+        $cart_item_data['welp_tier_level'] = $tier['level'];
+        $cart_item_data['welp_tier'] = $tier['level'];
+
+        $this->log('WELP meta keys added to cart_item_data', [
+            'cart_item_data' => $cart_item_data,
+        ]);
+
+        return $cart_item_data;
+    }
+
+    public function add_tier_to_order_item(\WC_Order_Item_Product $item, string $cart_item_key, array $cart_item, \WC_Order $order): void {
+        if (!isset($cart_item['wc_cgm_tier'])) {
+            return;
+        }
+
+        $tier = $cart_item['wc_cgm_tier'];
+
+        $item->add_meta_data('_wc_cgm_tier_level', $tier['level']);
+        $item->add_meta_data('_wc_cgm_tier_price', $tier['price']);
+        $item->add_meta_data('_wc_cgm_tier_price_type', $tier['price_type']);
+        $item->add_meta_data('_wc_cgm_tier_name', $tier['name']);
+        $item->add_meta_data('Experience Level', $tier['name']);
+
+        $this->log('Tier meta added to order item', [
+            'item_id' => $item->get_id(),
+            'tier_level' => $tier['level'],
+            'tier_name' => $tier['name'],
+        ]);
     }
 
     public function ajax_load_more(): void {

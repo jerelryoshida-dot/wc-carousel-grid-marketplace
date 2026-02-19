@@ -133,6 +133,13 @@ _Screenshots to be added_
 
 ## Changelog
 
+### 1.0.31 - 2026-02-20
+* Added: Comprehensive debug logging for add-to-cart troubleshooting
+* Added: WELP-compatible meta keys for cart item data
+* Fixed: jQuery .data() vs .attr() inconsistency for tier-level attribute
+* Fixed: Tier level now correctly passed to add_to_cart AJAX handler
+* Changed: Debug mode enabled in marketplace.js for troubleshooting
+
 ### 1.0.18 - 2026-02-19
 * Fixed: Total price now always calculates based on monthly rate regardless of price type selection
 * Improved: Total display consistency - switching between Monthly/Hourly no longer affects total calculation

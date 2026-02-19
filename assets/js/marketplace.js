@@ -2,13 +2,11 @@
     'use strict';
 
     var WC_CGM_Marketplace = {
-        debug: false,
+        debug: true,
         isLoading: true,
 
         log: function(...args) {
-            if (this.debug) {
-                console.log('[WC_CGM]', ...args);
-            }
+            console.log('[WC_CGM]', ...args);
         },
 
         currentCategory: 0,
@@ -108,6 +106,8 @@
         updateAllPricingPanels: function(tierLevel) {
             var visibleCount = 0;
             
+            WC_CGM_Marketplace.log('updateAllPricingPanels called with tierLevel:', tierLevel);
+            
             $('.wc-cgm-card').each(function() {
                 var $card = $(this);
                 var $panel = $card.find('.wc-cgm-pricing-panel');
@@ -136,7 +136,7 @@
                 
                 $panel.find('.wc-cgm-total-price').data('monthly-price', monthlyPrice);
                 
-                $panel.find('.wc-cgm-add-to-cart').data('tier-level', tierLevel);
+                $panel.find('.wc-cgm-add-to-cart').attr('data-tier-level', tierLevel);
                 
                 var badgeClass = ['entry', 'mid', 'expert'][tierLevel - 1] || 'default';
                 $badge
@@ -149,6 +149,7 @@
                 $panel.find('.wc-cgm-quantity-input').trigger('change');
             });
             
+            WC_CGM_Marketplace.log('updateAllPricingPanels complete. Visible cards:', visibleCount);
             WC_CGM_Marketplace.updateSectionHeader(visibleCount);
         },
 
@@ -275,15 +276,25 @@
             var $panel = $btn.closest('.wc-cgm-pricing-panel');
 
             var productId = $btn.data('product-id');
-            var tierLevel = parseInt($btn.data('tier-level')) || 0;
+            var tierLevelAttr = $btn.attr('data-tier-level');
+            var tierLevel = parseInt(tierLevelAttr) || 0;
             var priceType = $panel.find('.wc-cgm-switch-input').is(':checked') ? 'hourly' : ($panel.data('default-price-type') || 'monthly');
             var quantity = parseInt($panel.find('.wc-cgm-quantity-input').val()) || 1;
 
-            WC_CGM_Marketplace.log('Add to cart:', { productId, tierLevel, priceType, quantity });
+            WC_CGM_Marketplace.log('=== ADD TO CART CLICKED ===');
+            WC_CGM_Marketplace.log('Button data-tier-level attr:', tierLevelAttr);
+            WC_CGM_Marketplace.log('Button data-tier-level via .data():', $btn.data('tier-level'));
+            WC_CGM_Marketplace.log('Parsed tierLevel:', tierLevel);
+            WC_CGM_Marketplace.log('ProductId:', productId);
+            WC_CGM_Marketplace.log('PriceType:', priceType);
+            WC_CGM_Marketplace.log('Quantity:', quantity);
 
             var hasTiers = $card.data('has-tiers') || $panel.data('has-tiers');
+            WC_CGM_Marketplace.log('hasTiers:', hasTiers);
+            
             if (hasTiers === 'true' || hasTiers === true) {
                 if (tierLevel <= 0) {
+                    WC_CGM_Marketplace.log('ERROR: tierLevel is 0 or negative, aborting');
                     alert(wc_cgm_ajax.i18n.select_tier || 'Please select an experience level.');
                     return;
                 }
@@ -292,14 +303,28 @@
                 var monthlyPrice = parseFloat($panel.data('tier-' + tierLevel + '-monthly')) || 0;
                 var selectedPrice = priceType === 'monthly' ? monthlyPrice : hourlyPrice;
 
+                WC_CGM_Marketplace.log('Tier prices - hourly:', hourlyPrice, 'monthly:', monthlyPrice, 'selected:', selectedPrice);
+
                 if (selectedPrice <= 0) {
                     var errorMsg = priceType === 'monthly'
                         ? 'Monthly pricing is not available for this experience level.'
                         : 'Hourly pricing is not available for this experience level.';
+                    WC_CGM_Marketplace.log('ERROR: selectedPrice is 0 or negative');
                     alert(wc_cgm_ajax.i18n.invalid_price_type || errorMsg);
                     return;
                 }
             }
+
+            var ajaxData = {
+                action: 'wc_cgm_add_to_cart',
+                nonce: wc_cgm_ajax.nonce,
+                product_id: productId,
+                quantity: quantity,
+                tier_level: tierLevel,
+                price_type: priceType
+            };
+            
+            WC_CGM_Marketplace.log('Sending AJAX with data:', ajaxData);
 
             $btn.addClass('loading');
             $btn.find('.wc-cgm-btn-text').text('Adding...');
@@ -307,16 +332,9 @@
             $.ajax({
                 url: wc_cgm_ajax.ajax_url,
                 type: 'POST',
-                data: {
-                    action: 'wc_cgm_add_to_cart',
-                    nonce: wc_cgm_ajax.nonce,
-                    product_id: productId,
-                    quantity: quantity,
-                    tier_level: tierLevel,
-                    price_type: priceType
-                },
+                data: ajaxData,
                 success: function(response) {
-                    WC_CGM_Marketplace.log('Add to cart response:', response);
+                    WC_CGM_Marketplace.log('AJAX success response:', response);
                     if (response.success) {
                         $btn.find('.wc-cgm-btn-text').text(wc_cgm_ajax.i18n.added_to_cart);
                         
@@ -331,12 +349,13 @@
                             $btn.find('.wc-cgm-btn-text').text('Add to Cart');
                         }, 2000);
                     } else {
+                        WC_CGM_Marketplace.log('AJAX returned success:false:', response.data);
                         alert(response.data.message || wc_cgm_ajax.i18n.error);
                         $btn.find('.wc-cgm-btn-text').text('Add to Cart');
                     }
                 },
                 error: function(xhr, status, error) {
-                    WC_CGM_Marketplace.log('AJAX error:', xhr, status, error);
+                    WC_CGM_Marketplace.log('AJAX error:', {xhr: xhr, status: status, error: error});
                     alert('Error: ' + error);
                     $btn.find('.wc-cgm-btn-text').text('Add to Cart');
                 },
@@ -389,7 +408,7 @@
             $panel.find('.wc-cgm-price-main').data('price', price);
             $panel.find('.wc-cgm-price-main').html(WC_CGM_Marketplace.formatPrice(price));
 
-            $panel.find('.wc-cgm-add-to-cart').data('tier-level', $select.val());
+            $panel.find('.wc-cgm-add-to-cart').attr('data-tier-level', $select.val());
 
             $panel.find('.wc-cgm-quantity-input').trigger('change');
         },

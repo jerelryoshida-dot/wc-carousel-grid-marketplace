@@ -4,7 +4,7 @@ Tags: woocommerce, marketplace, carousel, grid, elementor, services, tiered pric
 Requires at least: 5.8
 Tested up to: 6.4
 Requires PHP: 7.4
-Stable tag: 1.0.30
+Stable tag: 1.0.31
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -87,6 +87,15 @@ Yes, tiered pricing is optional and can be disabled in the plugin settings.
 
 == Changelog ==
 
+
+== 1.0.31 ==
+Released: 2026-02-20
+
+* **Added**: Comprehensive debug logging for add-to-cart troubleshooting
+* **Added**: WELP-compatible meta keys for cart item data
+* **Fixed**: jQuery .data() vs .attr() inconsistency for tier-level attribute
+* **Fixed**: Tier level now correctly passed to add_to_cart AJAX handler
+* **Changed**: Debug mode enabled in marketplace.js for troubleshooting
 == 1.0.30 ==
 Released: 2026-02-20
 
