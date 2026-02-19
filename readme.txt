@@ -4,7 +4,7 @@ Tags: woocommerce, marketplace, carousel, grid, elementor, services, tiered pric
 Requires at least: 5.8
 Tested up to: 6.4
 Requires PHP: 7.4
-Stable tag: 1.0.28
+Stable tag: 1.0.29
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,6 +86,14 @@ Yes! There's a native Elementor widget with full design controls.
 Yes, tiered pricing is optional and can be disabled in the plugin settings.
 
 == Changelog ==
+
+== 1.0.29 ==
+Released: 2026-02-19
+
+* **Added**: Loading animation overlay - shows spinner until prices are synced and correct
+* **Added**: Staggered fade-in animation for product cards
+* **Added**: Loading states for category filter, search, and load more
+* **Improved**: No more visual glitch of wrong prices on initial load
 
 == 1.0.28 ==
 Released: 2026-02-19
