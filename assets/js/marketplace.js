@@ -111,10 +111,6 @@
                     .addClass(badgeClass)
                     .text(tierName);
                 
-                if (tierDescription) {
-                    $cardDesc.text(tierDescription);
-                }
-                
                 $panel.find('.wc-cgm-tier-description').text(tierDescription);
                 
                 $panel.find('.wc-cgm-quantity-input').trigger('change');
@@ -387,7 +383,7 @@
 
         formatPrice: function(price) {
             return '$' + price.toLocaleString('en-US', {
-                minimumFractionDigits: 0,
+                minimumFractionDigits: 2,
                 maximumFractionDigits: 2
             });
         },

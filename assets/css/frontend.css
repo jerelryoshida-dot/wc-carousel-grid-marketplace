@@ -277,3 +277,15 @@
 .wc-cgm-tier-selector-mini {
     display: none;
 }
+
+/* ============================================
+   Pricing Panel
+   ============================================ */
+
+.wc-cgm-pricing-panel {
+    margin-top: 10px;
+    border: solid 1px #00000013 !important;
+    background: #ffffff !important;
+    border-radius: var(--wc-cgm-radius-sm, 8px);
+    padding: 16px;
+}

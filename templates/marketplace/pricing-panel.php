@@ -25,7 +25,7 @@ $default_price_type = 'monthly';
 $default_price = $default_tier ? $default_tier->monthly_price : 0;
 ?>
 
-<div class="wc-cgm-pricing-panel"
+<div style="margin: 10px;" class="wc-cgm-pricing-panel"
      data-product-id="<?php echo esc_attr($product_id); ?>"
      data-default-tier="<?php echo esc_attr($default_tier->tier_level ?? 1); ?>"
      data-default-price-type="<?php echo esc_attr($default_price_type); ?>"
@@ -49,13 +49,13 @@ $default_price = $default_tier ? $default_tier->monthly_price : 0;
     <?php endif; ?>
 
     <div class="wc-cgm-pricing-amount">
-        <span class="wc-cgm-price-main" data-price="<?php echo esc_attr($default_price); ?>">
-            <?php echo wc_price($default_price); ?>
+        <span class="wc-cgm-price-main" data-price="<?php echo esc_attr(number_format($default_price, 2, '.', '')); ?>">
+            <?php echo wc_price(number_format($default_price, 2, '.', '')); ?>
         </span>
         <span class="wc-cgm-price-sub">
                 <?php
                 $monthly_equiv = $default_price * 160;
-                echo wc_price($monthly_equiv) . '/mo';
+                echo wc_price(number_format($monthly_equiv, 2, '.', '')) . '/mo';
                 ?>
         </span>
     </div>
@@ -76,9 +76,9 @@ $default_price = $default_tier ? $default_tier->monthly_price : 0;
     <div class="wc-cgm-total">
         <span class="wc-cgm-total-label"><?php esc_html_e('Total', 'wc-carousel-grid-marketplace'); ?></span>
         <span class="wc-cgm-total-price"
-              data-total="<?php echo esc_attr($default_price); ?>"
-              data-monthly-price="<?php echo esc_attr($default_tier->monthly_price ?? 0); ?>">
-            <?php echo wc_price($default_price); ?>/mo
+              data-total="<?php echo esc_attr(number_format($default_price, 2, '.', '')); ?>"
+              data-monthly-price="<?php echo esc_attr(number_format($default_tier->monthly_price ?? 0, 2, '.', '')); ?>">
+            <?php echo wc_price(number_format($default_price, 2, '.', '')); ?>/mo
         </span>
     </div>
 
