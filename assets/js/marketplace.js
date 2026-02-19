@@ -153,6 +153,10 @@
                             $grid.append(response.data.html);
                         }
                         WC_CGM_Marketplace.updateSectionHeader(response.data.count);
+                        
+                        if (WC_CGM_Marketplace.currentTier > 0) {
+                            WC_CGM_Marketplace.updateAllPricingPanels(WC_CGM_Marketplace.currentTier);
+                        }
                     }
                 },
                 complete: function() {
@@ -188,6 +192,9 @@
                         if (!response.data.has_more) {
                             $('.wc-cgm-load-more').hide();
                         }
+                        if (WC_CGM_Marketplace.currentTier > 0) {
+                            WC_CGM_Marketplace.updateAllPricingPanels(WC_CGM_Marketplace.currentTier);
+                        }
                     }
                 },
                 complete: function() {
@@ -219,6 +226,9 @@
                     if (response.success) {
                         $grid.html(response.data.html);
                         WC_CGM_Marketplace.updateSectionHeader(response.data.count);
+                        if (WC_CGM_Marketplace.currentTier > 0) {
+                            WC_CGM_Marketplace.updateAllPricingPanels(WC_CGM_Marketplace.currentTier);
+                        }
                     }
                 }
             });

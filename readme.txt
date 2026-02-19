@@ -4,7 +4,7 @@ Tags: woocommerce, marketplace, carousel, grid, elementor, services, tiered pric
 Requires at least: 5.8
 Tested up to: 6.4
 Requires PHP: 7.4
-Stable tag: 1.0.27
+Stable tag: 1.0.28
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,6 +86,13 @@ Yes! There's a native Elementor widget with full design controls.
 Yes, tiered pricing is optional and can be disabled in the plugin settings.
 
 == Changelog ==
+
+== 1.0.28 ==
+Released: 2026-02-19
+
+* **Fixed**: Service category click now syncs prices with active tier filter
+* **Fixed**: Load More button now syncs prices with active tier
+* **Fixed**: Search results now sync prices with active tier
 
 == 1.0.27 ==
 Released: 2026-02-19
