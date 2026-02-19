@@ -25,7 +25,7 @@ $default_price_type = 'monthly';
 $default_price = $default_tier ? $default_tier->monthly_price : 0;
 ?>
 
-<div class="wc-cgm-pricing-panel" 
+<div class="wc-cgm-pricing-panel"
      data-product-id="<?php echo esc_attr($product_id); ?>"
      data-default-tier="<?php echo esc_attr($default_tier->tier_level ?? 1); ?>"
      data-default-price-type="<?php echo esc_attr($default_price_type); ?>"
@@ -38,7 +38,7 @@ $default_price = $default_tier ? $default_tier->monthly_price : 0;
     <?php if (count($price_types) > 1) : ?>
     <div class="wc-cgm-price-type-selector">
         <?php foreach ($price_types as $type) : ?>
-        <button type="button" 
+        <button type="button"
                 class="wc-cgm-price-type-btn <?php echo $type === $default_price_type ? 'active' : ''; ?>"
                 data-price-type="<?php echo esc_attr($type); ?>">
             <?php echo esc_html($type === 'monthly' ? __('Monthly', 'wc-carousel-grid-marketplace') : __('Hourly', 'wc-carousel-grid-marketplace')); ?>
@@ -52,9 +52,9 @@ $default_price = $default_tier ? $default_tier->monthly_price : 0;
             <?php echo wc_price($default_price); ?>
         </span>
         <span class="wc-cgm-price-sub">
-                <?php 
+                <?php
                 $monthly_equiv = $default_price * 160;
-                echo wc_price($monthly_equiv) . '/mo'; 
+                echo wc_price($monthly_equiv) . '/mo';
                 ?>
         </span>
     </div>
@@ -62,11 +62,11 @@ $default_price = $default_tier ? $default_tier->monthly_price : 0;
     <div class="wc-cgm-headcount">
         <span class="wc-cgm-headcount-label"><?php esc_html_e('Headcount:', 'wc-carousel-grid-marketplace'); ?></span>
         <button type="button" class="wc-cgm-headcount-btn wc-cgm-btn-minus" data-action="decrease">-</button>
-        <input type="number" 
-               class="wc-cgm-quantity-input" 
-               name="quantity" 
-               value="1" 
-               min="1" 
+        <input type="number"
+               class="wc-cgm-quantity-input"
+               name="quantity"
+               value="1"
+               min="1"
                max="99"
                aria-label="<?php esc_attr_e('Quantity', 'wc-carousel-grid-marketplace'); ?>">
         <button type="button" class="wc-cgm-headcount-btn wc-cgm-btn-plus" data-action="increase">+</button>
@@ -74,13 +74,15 @@ $default_price = $default_tier ? $default_tier->monthly_price : 0;
 
     <div class="wc-cgm-total">
         <span class="wc-cgm-total-label"><?php esc_html_e('Total', 'wc-carousel-grid-marketplace'); ?></span>
-        <span class="wc-cgm-total-price" data-total="<?php echo esc_attr($default_price); ?>">
+        <span class="wc-cgm-total-price"
+              data-total="<?php echo esc_attr($default_price); ?>"
+              data-monthly-price="<?php echo esc_attr($default_tier->monthly_price ?? 0); ?>">
             <?php echo wc_price($default_price); ?>/mo
         </span>
     </div>
 
-    <button type="button" 
-            class="wc-cgm-add-to-cart" 
+    <button type="button"
+            class="wc-cgm-add-to-cart"
             data-product-id="<?php echo esc_attr($product_id); ?>"
             data-tier-level="<?php echo esc_attr($default_tier->tier_level ?? 1); ?>"
             data-price-type="<?php echo esc_attr($default_price_type); ?>">

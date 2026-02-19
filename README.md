@@ -133,6 +133,10 @@ _Screenshots to be added_
 
 ## Changelog
 
+### 1.0.18 - 2026-02-19
+* Fixed: Total price now always calculates based on monthly rate regardless of price type selection
+* Improved: Total display consistency - switching between Monthly/Hourly no longer affects total calculation
+
 ### 1.0.17 - 2026-02-19
 * Fixed: Fatal error "Cannot redeclare wc_cgm_autoloader()" when multiple plugin versions installed
 * Added: function_exists() check to prevent autoloader redeclaration conflicts

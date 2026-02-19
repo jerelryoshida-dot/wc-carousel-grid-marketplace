@@ -99,6 +99,8 @@
                     .data('price', newPrice)
                     .html(WC_CGM_Marketplace.formatPrice(newPrice));
                 
+                $panel.find('.wc-cgm-total-price').data('monthly-price', monthlyPrice);
+                
                 $panel.find('.wc-cgm-add-to-cart').data('tier-level', tierLevel);
                 
                 var badgeClass = ['entry', 'mid', 'expert'][tierLevel - 1] || 'default';
@@ -308,8 +310,8 @@
             var $input = $(this);
             var $panel = $input.closest('.wc-cgm-pricing-panel');
             var quantity = parseInt($input.val()) || 1;
-            var price = parseFloat($panel.find('.wc-cgm-price-main').data('price')) || 0;
-            var total = price * quantity;
+            var monthlyPrice = parseFloat($panel.find('.wc-cgm-total-price').data('monthly-price')) || 0;
+            var total = monthlyPrice * quantity;
 
             $panel.find('.wc-cgm-total-price').data('total', total);
 
@@ -354,6 +356,8 @@
             $panel.find('.wc-cgm-price-main')
                 .data('price', newPrice)
                 .html(WC_CGM_Marketplace.formatPrice(newPrice));
+            
+            $panel.find('.wc-cgm-total-price').data('monthly-price', monthlyPrice);
             
             if (priceType === 'monthly') {
                 var hourlyEquiv = monthlyPrice / 160;

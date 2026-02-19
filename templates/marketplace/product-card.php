@@ -30,13 +30,13 @@ foreach ($tiers as $tier) {
     <?php endif; ?>
 
     <h3 class="wc-cgm-card-title">
+        <?php echo esc_html($product->get_name()); ?>
         <a href="<?php echo esc_url($product->get_permalink()); ?>">
             <?php if (!empty($tiers) && $default_tier && isset($tier_badges[$default_tier->tier_level])) : ?>
-                <?php echo esc_html($tier_badges[$default_tier->tier_level]); ?>
-            <span class="wc-cgm-tier-badge <?php echo esc_attr($tier_classes[$default_tier->tier_level] ?? 'default'); ?>">      
+            <span class="wc-cgm-tier-badge <?php echo esc_attr($tier_classes[$default_tier->tier_level] ?? 'default'); ?>">
+                <?php echo esc_html($tier_badges[$default_tier->tier_level]); ?>      
             </span>
             <?php endif; ?>
-            <?php echo esc_html($product->get_name()); ?>
         </a>
     </h3>
 
