@@ -3,7 +3,7 @@
  * Plugin Name: WooCommerce Carousel/Grid Marketplace
  * Plugin URI: https://github.com/Jerel-R-Yoshida/wc-carousel-grid-marketplace
  * Description: Service marketplace with carousel/grid layout, optional tiered pricing, and Elementor compatibility.
- * Version: 1.0.18
+ * Version: 1.0.19
  * Author: Jerel Yoshida
  * Author URI: https://github.com/Jerel-R-Yoshida
  * Text Domain: wc-carousel-grid-marketplace
@@ -29,7 +29,7 @@ if (!defined('WP_DEBUG_DISPLAY')) {
     define('WP_DEBUG_DISPLAY', false);  // Don't show errors on screen
 }
 
-define('WC_CGM_VERSION', '1.0.18');
+define('WC_CGM_VERSION', '1.0.19');
 define('WC_CGM_PLUGIN_FILE', __FILE__);
 define('WC_CGM_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('WC_CGM_PLUGIN_URL', plugin_dir_url(__FILE__));
@@ -38,8 +38,6 @@ define('WC_CGM_TABLE_TIERS', 'welp_product_tiers');
 define('WC_CGM_TABLE_SALES', 'welp_order_tier_sales');
 
 if (!function_exists('wc_cgm_autoloader')) {
-    spl_autoload_register('wc_cgm_autoloader');
-
     function wc_cgm_autoloader($class) {
         $prefix = 'WC_CGM\\';
         $base_dir = WC_CGM_PLUGIN_DIR . 'src/';
@@ -56,6 +54,8 @@ if (!function_exists('wc_cgm_autoloader')) {
             require $file;
         }
     }
+
+    spl_autoload_register('wc_cgm_autoloader');
 }
 
 function wc_cgm(): WC_CGM\Core\Plugin {

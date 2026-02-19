@@ -4,7 +4,7 @@ Tags: woocommerce, marketplace, carousel, grid, elementor, services, tiered pric
 Requires at least: 5.8
 Tested up to: 6.4
 Requires PHP: 7.4
-Stable tag: 1.0.18
+Stable tag: 1.0.19
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -87,6 +87,11 @@ Yes, tiered pricing is optional and can be disabled in the plugin settings.
 
 == Changelog ==
 
+
+== 1.0.19 ==
+Released: 2026-02-19
+
+* Fixed: Fatal error on plugin activation - spl_autoload_register() callback now defined before registration
 == 1.0.18 ==
 Released: 2026-02-19
 
