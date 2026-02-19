@@ -20,10 +20,16 @@ $class = $atts['class'] ?? '';
 <?php echo $admin_notice; ?>
 <?php endif; ?>
 
-<div class="wc-cgm-marketplace <?php echo esc_attr($class); ?>"
+<div class="wc-cgm-marketplace wc-cgm-loading <?php echo esc_attr($class); ?>"
      data-columns="<?php echo esc_attr($columns); ?>"
      data-layout="<?php echo esc_attr($layout); ?>"
      data-mobile-carousel="<?php echo esc_attr($mobile_carousel ? 'true' : 'false'); ?>">
+
+    <!-- Loading Overlay -->
+    <div class="wc-cgm-loading-overlay">
+        <div class="wc-cgm-loading-spinner"></div>
+        <div class="wc-cgm-loading-text"><?php esc_html_e('Loading services...', 'wc-carousel-grid-marketplace'); ?></div>
+    </div>
 
     <?php if ($show_sidebar && !empty($categories)) : ?>
     <aside class="wc-cgm-sidebar">

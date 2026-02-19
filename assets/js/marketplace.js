@@ -3,6 +3,7 @@
 
     var WC_CGM_Marketplace = {
         debug: false,
+        isLoading: true,
 
         log: function(...args) {
             if (this.debug) {
@@ -19,14 +20,38 @@
             this.bindEvents();
             this.initCarousel();
             this.initDefaultTier();
-            
+            this.syncInitialPrices();
+        },
+
+        syncInitialPrices: function() {
             var $activeBtn = $('.wc-cgm-tier-btn.active');
+            var $marketplace = $('.wc-cgm-marketplace');
+            
             if ($activeBtn.length) {
                 var activeTier = parseInt($activeBtn.data('tier')) || 1;
                 if (activeTier > 0) {
                     this.updateAllPricingPanels(activeTier);
                 }
             }
+            
+            this.hideLoading();
+        },
+
+        showLoading: function() {
+            var $marketplace = $('.wc-cgm-marketplace');
+            $marketplace.addClass('wc-cgm-loading').removeClass('wc-cgm-loaded');
+            $marketplace.find('.wc-cgm-loading-overlay').removeClass('hidden');
+            this.isLoading = true;
+        },
+
+        hideLoading: function() {
+            var $marketplace = $('.wc-cgm-marketplace');
+            
+            setTimeout(function() {
+                $marketplace.removeClass('wc-cgm-loading').addClass('wc-cgm-loaded');
+                $marketplace.find('.wc-cgm-loading-overlay').addClass('hidden');
+                WC_CGM_Marketplace.isLoading = false;
+            }, 100);
         },
 
         initDefaultTier: function() {
@@ -131,6 +156,8 @@
             var $grid = $('.wc-cgm-grid');
             var limit = parseInt($grid.closest('.wc-cgm-marketplace').data('limit')) || WC_CGM_Marketplace.limit;
 
+            this.showLoading();
+
             $.ajax({
                 url: wc_cgm_ajax.ajax_url,
                 type: 'POST',
@@ -161,6 +188,7 @@
                 },
                 complete: function() {
                     $grid.removeClass('loading');
+                    WC_CGM_Marketplace.hideLoading();
                 }
             });
         },
@@ -168,6 +196,7 @@
         loadMore: function(e) {
             e.preventDefault();
             var $grid = $('.wc-cgm-grid');
+            var $btn = $(this);
             var limit = parseInt($grid.closest('.wc-cgm-marketplace').data('limit')) || WC_CGM_Marketplace.limit;
 
             WC_CGM_Marketplace.currentOffset += limit;
@@ -184,7 +213,7 @@
                     offset: WC_CGM_Marketplace.currentOffset
                 },
                 beforeSend: function() {
-                    $(this).addClass('loading').text('Loading...');
+                    $btn.addClass('loading').html('<span class="dashicons dashicons-update wc-cgm-spin"></span> Loading...');
                 },
                 success: function(response) {
                     if (response.success) {
@@ -198,7 +227,7 @@
                     }
                 },
                 complete: function() {
-                    $(this).removeClass('loading').text('Load More');
+                    $btn.removeClass('loading').text('Load More');
                 }
             });
         },
@@ -212,6 +241,8 @@
                 WC_CGM_Marketplace.loadProducts();
                 return;
             }
+
+            WC_CGM_Marketplace.showLoading();
 
             $.ajax({
                 url: wc_cgm_ajax.ajax_url,
@@ -230,6 +261,9 @@
                             WC_CGM_Marketplace.updateAllPricingPanels(WC_CGM_Marketplace.currentTier);
                         }
                     }
+                },
+                complete: function() {
+                    WC_CGM_Marketplace.hideLoading();
                 }
             });
         },
