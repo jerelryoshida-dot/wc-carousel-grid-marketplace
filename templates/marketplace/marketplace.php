@@ -49,7 +49,7 @@ $class = $atts['class'] ?? '';
         </div>
         <?php endif; ?>
 
-        <?php if ($show_filter && wc_cgm_tier_pricing_enabled()) : ?>
+        <?php if ($show_filter) : ?>
         <?php echo \WC_CGM\Frontend\Marketplace::render_filter_bar($atts); ?>
         <?php endif; ?>
 

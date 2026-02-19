@@ -47,7 +47,7 @@ class Admin_Manager {
             wp_die(__('You do not have sufficient permissions to access this page.', 'wc-carousel-grid-marketplace'));
         }
 
-        if (isset($_POST['welp_save_settings']) && check_admin_referer('welp_settings_nonce')) {
+        if (isset($_POST['wc_cgm_save_settings']) && check_admin_referer('wc_cgm_settings_nonce')) {
             $this->save_settings();
             echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__('Settings saved successfully.', 'wc-carousel-grid-marketplace') . '</p></div>';
         }
@@ -57,27 +57,21 @@ class Admin_Manager {
 
     private function save_settings(): void {
         $settings = [
-            'welp_enable_tier_pricing' => isset($_POST['welp_enable_tier_pricing']),
-            'welp_grid_columns' => absint($_POST['welp_grid_columns'] ?? 3),
-            'welp_mobile_carousel' => isset($_POST['welp_mobile_carousel']),
-            'welp_show_sidebar' => isset($_POST['welp_show_sidebar']),
-            'welp_show_filter_bar' => isset($_POST['welp_show_filter_bar']),
-            'welp_cards_per_page' => absint($_POST['welp_cards_per_page'] ?? 12),
-            'welp_enable_infinite_scroll' => isset($_POST['welp_enable_infinite_scroll']),
-            'welp_card_style' => sanitize_text_field($_POST['welp_card_style'] ?? 'default'),
-            'welp_popular_method' => sanitize_text_field($_POST['welp_popular_method'] ?? 'auto'),
-            'welp_popular_threshold' => absint($_POST['welp_popular_threshold'] ?? 5),
-            'welp_popular_days' => absint($_POST['welp_popular_days'] ?? 30),
-            'welp_remove_data_on_uninstall' => isset($_POST['welp_remove_data_on_uninstall']),
+            'wc_cgm_grid_columns' => absint($_POST['wc_cgm_grid_columns'] ?? 3),
+            'wc_cgm_cards_per_page' => absint($_POST['wc_cgm_cards_per_page'] ?? 12),
+            'wc_cgm_mobile_carousel' => isset($_POST['wc_cgm_mobile_carousel']),
+            'wc_cgm_show_sidebar' => isset($_POST['wc_cgm_show_sidebar']),
+            'wc_cgm_show_filter_bar' => isset($_POST['wc_cgm_show_filter_bar']),
+            'wc_cgm_enable_infinite_scroll' => isset($_POST['wc_cgm_enable_infinite_scroll']),
+            'wc_cgm_card_style' => sanitize_text_field($_POST['wc_cgm_card_style'] ?? 'default'),
+            'wc_cgm_popular_method' => sanitize_text_field($_POST['wc_cgm_popular_method'] ?? 'auto'),
+            'wc_cgm_popular_threshold' => absint($_POST['wc_cgm_popular_threshold'] ?? 5),
+            'wc_cgm_popular_days' => absint($_POST['wc_cgm_popular_days'] ?? 30),
+            'wc_cgm_remove_data_on_uninstall' => isset($_POST['wc_cgm_remove_data_on_uninstall']),
         ];
 
         foreach ($settings as $option => $value) {
             update_option($option, $value);
-        }
-
-        if ($settings['wc_cgm_enable_tier_pricing']) {
-            $activator = new \WC_CGM\Core\Activator();
-            $activator->activate();
         }
     }
 
@@ -93,7 +87,7 @@ class Admin_Manager {
             </div>
 
             <form method="post" action="">
-                <?php wp_nonce_field('welp_settings_nonce'); ?>
+                <?php wp_nonce_field('wc_cgm_settings_nonce'); ?>
 
                 <div class="wc-cgm-settings-section">
                     <h2><?php esc_html_e('General Settings', 'wc-carousel-grid-marketplace'); ?></h2>
@@ -102,61 +96,8 @@ class Admin_Manager {
                         <tr>
                             <th scope="row"><?php esc_html_e('Grid Columns', 'wc-carousel-grid-marketplace'); ?></th>
                             <td>
-                                <input type="number" name="welp_grid_columns" value="<?php echo esc_attr(get_option('welp_grid_columns', 3)); ?>" min="1" max="6">
+                                <input type="number" name="wc_cgm_grid_columns" value="<?php echo esc_attr(get_option('wc_cgm_grid_columns', 3)); ?>" min="1" max="6">
                                 <p class="description"><?php esc_html_e('Number of columns in grid layout (1-6).', 'wc-carousel-grid-marketplace'); ?></p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row"><?php esc_html_e('Products per Page', 'wc-carousel-grid-marketplace'); ?></th>
-                            <td>
-                                <input type="number" name="welp_cards_per_page" value="<?php echo esc_attr(get_option('welp_cards_per_page', 12)); ?>" min="1" max="100">
-                                <p class="description"><?php esc_html_e('Maximum number of products to display per page.', 'wc-carousel-grid-marketplace'); ?></p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row"><?php esc_html_e('Mobile Carousel', 'wc-carousel-grid-marketplace'); ?></th>
-                            <td>
-                                <label>
-                                    <input type="checkbox" name="welp_mobile_carousel" value="1" <?php checked(get_option('welp_mobile_carousel', true)); ?>>
-                                    <?php esc_html_e('Enable carousel on mobile devices', 'wc-carousel-grid-marketplace'); ?>
-                                </label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row"><?php esc_html_e('Show Sidebar', 'wc-carousel-grid-marketplace'); ?></th>
-                            <td>
-                                <label>
-                                    <input type="checkbox" name="welp_show_sidebar" value="1" <?php checked(get_option('welp_show_sidebar', true)); ?>>
-                                    <?php esc_html_e('Display category sidebar', 'wc-carousel-grid-marketplace'); ?>
-                                </label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row"><?php esc_html_e('Show Filter Bar', 'wc-carousel-grid-marketplace'); ?></th>
-                            <td>
-                                <label>
-                                    <input type="checkbox" name="welp_show_filter_bar" value="1" <?php checked(get_option('welp_show_filter_bar', true)); ?>>
-                                    <?php esc_html_e('Display tier filter bar (requires tier pricing)', 'wc-carousel-grid-marketplace'); ?>
-                                </label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row"><?php esc_html_e('Infinite Scroll', 'wc-carousel-grid-marketplace'); ?></th>
-                            <td>
-                                <label>
-                                    <input type="checkbox" name="welp_enable_infinite_scroll" value="1" <?php checked(get_option('welp_enable_infinite_scroll', false)); ?>>
-                                    <?php esc_html_e('Enable infinite scroll instead of pagination', 'wc-carousel-grid-marketplace'); ?>
-                                </label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row"><?php esc_html_e('Card Style', 'wc-carousel-grid-marketplace'); ?></th>
-                            <td>
-                                <select name="welp_card_style">
-                                    <option value="default" <?php selected(get_option('welp_card_style', 'default'), 'default'); ?>><?php esc_html_e('Default', 'wc-carousel-grid-marketplace'); ?></option>
-                                    <option value="compact" <?php selected(get_option('welp_card_style'), 'compact'); ?>><?php esc_html_e('Compact', 'wc-carousel-grid-marketplace'); ?></option>
-                                    <option value="detailed" <?php selected(get_option('welp_card_style'), 'detailed'); ?>><?php esc_html_e('Detailed', 'wc-carousel-grid-marketplace'); ?></option>
-                                </select>
                             </td>
                         </tr>
                         <tr>
@@ -189,7 +130,7 @@ class Admin_Manager {
                             <td>
                                 <label>
                                     <input type="checkbox" name="wc_cgm_show_filter_bar" value="1" <?php checked(get_option('wc_cgm_show_filter_bar', true)); ?>>
-                                    <?php esc_html_e('Display tier filter bar (requires tier pricing)', 'wc-carousel-grid-marketplace'); ?>
+                                    <?php esc_html_e('Display tier filter bar', 'wc-carousel-grid-marketplace'); ?>
                                 </label>
                             </td>
                         </tr>
@@ -216,47 +157,30 @@ class Admin_Manager {
                 </div>
 
                 <div class="wc-cgm-settings-section">
-                    <h2><?php esc_html_e('Tier Pricing', 'wc-carousel-grid-marketplace'); ?></h2>
-
-                    <table class="form-table">
-                        <tr>
-                            <th scope="row"><?php esc_html_e('Enable Tier Pricing', 'wc-carousel-grid-marketplace'); ?></th>
-                            <td>
-                                <label>
-                                    <input type="checkbox" name="welp_enable_tier_pricing" value="1" <?php checked(get_option('welp_enable_tier_pricing', false)); ?>>
-                                    <?php esc_html_e('Enable Entry/Mid/Expert tier pricing system', 'wc-carousel-grid-marketplace'); ?>
-                                </label>
-                                <p class="description"><?php esc_html_e('When enabled, products can have multiple price tiers for different experience levels.', 'wc-carousel-grid-marketplace'); ?></p>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-
-                <div class="wc-cgm-settings-section">
                     <h2><?php esc_html_e('Popular Badge', 'wc-carousel-grid-marketplace'); ?></h2>
 
                     <table class="form-table">
                         <tr>
                             <th scope="row"><?php esc_html_e('Popular Method', 'wc-carousel-grid-marketplace'); ?></th>
                             <td>
-                                <select name="welp_popular_method">
-                                    <option value="auto" <?php selected(get_option('welp_popular_method', 'auto'), 'auto'); ?>><?php esc_html_e('Automatic (based on sales)', 'wc-carousel-grid-marketplace'); ?></option>
-                                    <option value="manual" <?php selected(get_option('welp_popular_method'), 'manual'); ?>><?php esc_html_e('Manual (set per product)', 'wc-carousel-grid-marketplace'); ?></option>
-                                    <option value="both" <?php selected(get_option('welp_popular_method'), 'both'); ?>><?php esc_html_e('Both (auto + manual)', 'wc-carousel-grid-marketplace'); ?></option>
+                                <select name="wc_cgm_popular_method">
+                                    <option value="auto" <?php selected(get_option('wc_cgm_popular_method', 'auto'), 'auto'); ?>><?php esc_html_e('Automatic (based on sales)', 'wc-carousel-grid-marketplace'); ?></option>
+                                    <option value="manual" <?php selected(get_option('wc_cgm_popular_method'), 'manual'); ?>><?php esc_html_e('Manual (set per product)', 'wc-carousel-grid-marketplace'); ?></option>
+                                    <option value="both" <?php selected(get_option('wc_cgm_popular_method'), 'both'); ?>><?php esc_html_e('Both (auto + manual)', 'wc-carousel-grid-marketplace'); ?></option>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <th scope="row"><?php esc_html_e('Sales Threshold', 'wc-carousel-grid-marketplace'); ?></th>
                             <td>
-                                <input type="number" name="welp_popular_threshold" value="<?php echo esc_attr(get_option('welp_popular_threshold', 5)); ?>" min="1" max="100">
+                                <input type="number" name="wc_cgm_popular_threshold" value="<?php echo esc_attr(get_option('wc_cgm_popular_threshold', 5)); ?>" min="1" max="100">
                                 <p class="description"><?php esc_html_e('Minimum sales required for auto-popular badge.', 'wc-carousel-grid-marketplace'); ?></p>
                             </td>
                         </tr>
                         <tr>
                             <th scope="row"><?php esc_html_e('Lookback Period (Days)', 'wc-carousel-grid-marketplace'); ?></th>
                             <td>
-                                <input type="number" name="welp_popular_days" value="<?php echo esc_attr(get_option('welp_popular_days', 30)); ?>" min="1" max="365">
+                                <input type="number" name="wc_cgm_popular_days" value="<?php echo esc_attr(get_option('wc_cgm_popular_days', 30)); ?>" min="1" max="365">
                                 <p class="description"><?php esc_html_e('Number of days to look back for sales count.', 'wc-carousel-grid-marketplace'); ?></p>
                             </td>
                         </tr>
@@ -286,17 +210,24 @@ class Admin_Manager {
                             <th scope="row"><?php esc_html_e('Remove Data on Uninstall', 'wc-carousel-grid-marketplace'); ?></th>
                             <td>
                                 <label>
-                                    <input type="checkbox" name="welp_remove_data_on_uninstall" value="1" <?php checked(get_option('welp_remove_data_on_uninstall', false)); ?>>
+                                    <input type="checkbox" name="wc_cgm_remove_data_on_uninstall" value="1" <?php checked(get_option('wc_cgm_remove_data_on_uninstall', false)); ?>>
                                     <?php esc_html_e('Delete all plugin data when uninstalling', 'wc-carousel-grid-marketplace'); ?>
                                 </label>
-                                <p class="description"><?php esc_html_e('Warning: This will permanently delete all tier pricing and sales data.', 'wc-carousel-grid-marketplace'); ?></p>
+                                <p class="description"><?php esc_html_e('Warning: This will permanently delete all marketplace settings and post meta.', 'wc-carousel-grid-marketplace'); ?></p>
                             </td>
                         </tr>
                     </table>
                 </div>
 
+                <div class="wc-cgm-settings-section wc-cgm-info-box">
+                    <h2><?php esc_html_e('Tier Pricing', 'wc-carousel-grid-marketplace'); ?></h2>
+                    <p class="description">
+                        <?php esc_html_e('Tier pricing is managed by the WooCommerce Experience Level Pricing plugin. Configure tier settings in each product\'s edit screen under the "Experience Level Pricing" metabox.', 'wc-carousel-grid-marketplace'); ?>
+                    </p>
+                </div>
+
                 <p class="submit">
-                    <input type="submit" name="welp_save_settings" class="button button-primary" value="<?php esc_attr_e('Save Settings', 'wc-carousel-grid-marketplace'); ?>">
+                    <input type="submit" name="wc_cgm_save_settings" class="button button-primary" value="<?php esc_attr_e('Save Settings', 'wc-carousel-grid-marketplace'); ?>">
                 </p>
             </form>
         </div>

@@ -4,7 +4,7 @@ Tags: woocommerce, marketplace, carousel, grid, elementor, services, tiered pric
 Requires at least: 5.8
 Tested up to: 6.4
 Requires PHP: 7.4
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -87,6 +87,14 @@ Yes, tiered pricing is optional and can be disabled in the plugin settings.
 
 == Changelog ==
 
+== 1.2.1 ==
+Released: 2026-02-19
+
+* **Fixed**: Fatal error "Call to undefined function wc_cgm_tier_pricing_enabled()" in marketplace template
+* **Fixed**: Admin settings now use consistent `wc_cgm_` prefix throughout
+* **Fixed**: Removed duplicate form fields in admin settings page
+* **Removed**: Tier Pricing settings section (now managed by WELP plugin)
+* **Changed**: Filter bar always shows when enabled (WELP is required dependency)
 
 == 1.2.0 ==
 Released: 2026-02-19
