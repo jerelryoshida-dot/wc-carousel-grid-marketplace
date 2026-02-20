@@ -36,7 +36,7 @@
             if ($activeBtn.length) {
                 var activeTier = parseInt($activeBtn.data('tier')) || 0;
                 if (activeTier > 0) {
-                    this.filterProductsByTier(activeTier);
+                    this.updateAllPricingPanels(activeTier);
                 }
             }
             
@@ -104,43 +104,7 @@
             $('.wc-cgm-tier-btn').removeClass('active');
             $this.addClass('active');
 
-            if (tier === 0) {
-                WC_CGM_Marketplace.loadProducts();
-            } else {
-                WC_CGM_Marketplace.filterProductsByTier(tier);
-            }
-        },
-
-        filterProductsByTier: function(tierLevel) {
-            var visibleCount = 0;
-            
-            WC_CGM_Marketplace.log('filterProductsByTier called with tierLevel:', tierLevel);
-            
-            $('.wc-cgm-card').each(function() {
-                var $card = $(this);
-                var $panel = $card.find('.wc-cgm-pricing-panel');
-                
-                var hourlyPrice = parseFloat($panel.data('tier-' + tierLevel + '-hourly')) || 0;
-                var monthlyPrice = parseFloat($panel.data('tier-' + tierLevel + '-monthly')) || 0;
-                
-                if (hourlyPrice <= 0 && monthlyPrice <= 0) {
-                    $card.hide();
-                    WC_CGM_Marketplace.log('Product hidden - no pricing for tier', {
-                        product_id: $card.data('product-id'),
-                        tier_level: tierLevel
-                    });
-                } else {
-                    $card.show();
-                    visibleCount++;
-                    WC_CGM_Marketplace.log('Product visible for tier', {
-                        product_id: $card.data('product-id'),
-                        tier_level: tierLevel
-                    });
-                }
-            });
-            
-            WC_CGM_Marketplace.log('filterProductsByTier complete. Visible products:', visibleCount);
-            WC_CGM_Marketplace.updateSectionHeader(visibleCount);
+            WC_CGM_Marketplace.loadProducts();
         },
 
         syncPanelFromDropdown: function($panel) {
@@ -240,7 +204,7 @@
                         WC_CGM_Marketplace.syncAllPanelsFromDropdowns();
                         
                         if (WC_CGM_Marketplace.currentTier > 0) {
-                            WC_CGM_Marketplace.filterProductsByTier(WC_CGM_Marketplace.currentTier);
+                            WC_CGM_Marketplace.updateAllPricingPanels(WC_CGM_Marketplace.currentTier);
                         }
                     }
                 },
@@ -281,7 +245,7 @@
                         }
                         WC_CGM_Marketplace.syncAllPanelsFromDropdowns();
                         if (WC_CGM_Marketplace.currentTier > 0) {
-                            WC_CGM_Marketplace.filterProductsByTier(WC_CGM_Marketplace.currentTier);
+                            WC_CGM_Marketplace.updateAllPricingPanels(WC_CGM_Marketplace.currentTier);
                         }
                     }
                 },
@@ -318,7 +282,7 @@
                         WC_CGM_Marketplace.updateSectionHeader(response.data.count);
                         WC_CGM_Marketplace.syncAllPanelsFromDropdowns();
                         if (WC_CGM_Marketplace.currentTier > 0) {
-                            WC_CGM_Marketplace.filterProductsByTier(WC_CGM_Marketplace.currentTier);
+                            WC_CGM_Marketplace.updateAllPricingPanels(WC_CGM_Marketplace.currentTier);
                         }
                     }
                 },
