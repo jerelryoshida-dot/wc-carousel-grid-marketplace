@@ -133,6 +133,10 @@ _Screenshots to be added_
 
 ## Changelog
 
+### 1.0.37 - 2026-02-21
+* Fixed: Cart now correctly saves the selected tier level (was defaulting to tier 1)
+* Fixed: Set $_POST['selected_tier'] before add_to_cart() for WELP compatibility
+
 ### 1.0.36 - 2026-02-21
 * Fixed: Global experience level filter now correctly updates button's data-tier-level attribute
 * Fixed: Add-to-cart now sends the correct tier level selected via global filter (Entry/Mid/Expert)
