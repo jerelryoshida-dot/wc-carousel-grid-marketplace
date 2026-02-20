@@ -240,6 +240,9 @@ class WooCommerce_Hooks {
         ]);
 
         try {
+            // Set $_POST fields for WELP compatibility (WELP reads selected_tier from $_POST)
+            $_POST['selected_tier'] = $tier_level;
+
             $cart_item_key = WC()->cart->add_to_cart($product_id, $quantity, 0, [], $cart_item_data);
 
             $wc_notices = function_exists('wc_get_notices') ? wc_get_notices() : [];
