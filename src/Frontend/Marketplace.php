@@ -162,10 +162,10 @@ class Marketplace {
             </div>
 
             <button type="button"
-                    class="wc-cgm-add-to-cart"
-                    data-product-id="<?php echo esc_attr($product_id); ?>"
-                    data-tier-level="<?php echo esc_attr($default_tier->tier_level ?? 1); ?>"
-                    data-price-type="<?php echo esc_attr($default_price_type); ?>">
+                     class="wc-cgm-add-to-cart"
+                     data-product-id="<?php echo esc_attr($product_id); ?>"
+                     data-tier-level="<?php echo esc_attr($default_tier->tier_level ?? 0); ?>"
+                     data-price-type="<?php echo esc_attr($default_price_type); ?>">
                 <span class="dashicons dashicons-cart"></span>
                 <span class="wc-cgm-btn-text"><?php esc_html_e('Add to Cart', 'wc-carousel-grid-marketplace'); ?></span>
             </button>

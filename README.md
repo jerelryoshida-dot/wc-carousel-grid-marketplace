@@ -133,6 +133,26 @@ _Screenshots to be added_
 
 ## Changelog
 
+### 1.0.33 - 2026-02-20
+* Added: Enhanced debug logging for add-to-cart failures
+* Added: Captures WooCommerce error notices when add_to_cart fails
+* Added: Logs product state (purchasable, stock, price, status) before add_to_cart
+* Improved: Error messages now include actual WooCommerce error notices
+
+### 1.0.32 - 2026-02-20
+* Fixed: Add-to-cart now works correctly with WELP (WooCommerce Experience Level Pricing)
+* Fixed: JavaScript sends WELP-expected field names (welp_selected_tier, welp_tier_name, etc.)
+* Fixed: PHP sets $_POST fields before add_to_cart() so WELP can detect tier selection
+* Changed: Removed redundant add_welp_compatible_meta filter
+* Changed: Cart/checkout display now reads from welp_tier instead of wc_cgm_tier
+
+### 1.0.31 - 2026-02-20
+* Added: Comprehensive debug logging for add-to-cart troubleshooting
+* Added: WELP-compatible meta keys for cart item data
+* Fixed: jQuery .data() vs .attr() inconsistency for tier-level attribute
+* Fixed: Tier level now correctly passed to add_to_cart AJAX handler
+* Changed: Debug mode enabled in marketplace.js for troubleshooting
+
 ### 1.0.18 - 2026-02-19
 * Fixed: Total price now always calculates based on monthly rate regardless of price type selection
 * Improved: Total display consistency - switching between Monthly/Hourly no longer affects total calculation

@@ -3,7 +3,7 @@
     grid-template-columns: 280px 1fr;
     gap: 32px;
     padding: 24px;
-    background: var(--wc-cgm-bg-page, #f3f4f6);
+    background: var(--wc-cgm-bg-page, #ffffff);
     min-height: 400px;
 }
 

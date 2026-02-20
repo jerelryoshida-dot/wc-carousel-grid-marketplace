@@ -4,7 +4,7 @@ Tags: woocommerce, marketplace, carousel, grid, elementor, services, tiered pric
 Requires at least: 5.8
 Tested up to: 6.4
 Requires PHP: 7.4
-Stable tag: 1.0.30
+Stable tag: 1.0.34
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -87,6 +87,38 @@ Yes, tiered pricing is optional and can be disabled in the plugin settings.
 
 == Changelog ==
 
+
+== 1.0.34 ==
+Released: 2026-02-21
+
+* Development update
+== 1.0.33 ==
+Released: 2026-02-20
+
+* **Added**: Enhanced debug logging for add-to-cart failures
+* **Added**: Captures WooCommerce error notices when add_to_cart fails
+* **Added**: Logs product state (purchasable, stock, price, status) before add_to_cart
+* **Added**: Logs WooCommerce session and customer state
+* **Improved**: Error messages now include actual WooCommerce error notices
+
+== 1.0.32 ==
+Released: 2026-02-20
+
+* **Fixed**: Add-to-cart now works correctly with WELP (WooCommerce Experience Level Pricing)
+* **Fixed**: JavaScript sends WELP-expected field names (welp_selected_tier, welp_tier_name, etc.)
+* **Fixed**: PHP sets $_POST fields before add_to_cart() so WELP can detect tier selection
+* **Changed**: Removed redundant add_welp_compatible_meta filter (WELP handles everything via $_POST)
+* **Changed**: Cart/checkout display now reads from welp_tier instead of wc_cgm_tier
+* **Improved**: Cleaner integration with WELP's native cart handling
+
+== 1.0.31 ==
+Released: 2026-02-20
+
+* **Added**: Comprehensive debug logging for add-to-cart troubleshooting
+* **Added**: WELP-compatible meta keys for cart item data
+* **Fixed**: jQuery .data() vs .attr() inconsistency for tier-level attribute
+* **Fixed**: Tier level now correctly passed to add_to_cart AJAX handler
+* **Changed**: Debug mode enabled in marketplace.js for troubleshooting
 == 1.0.30 ==
 Released: 2026-02-20
 
