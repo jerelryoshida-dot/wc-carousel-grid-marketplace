@@ -164,6 +164,8 @@ class WooCommerce_Hooks {
             return;
         }
 
+        $cart_item_data = [];
+
         if (wc_cgm_is_marketplace_product($product_id)) {
             $this->log('Product is marketplace product', ['product_id' => $product_id, 'tier_level' => $tier_level]);
 
@@ -203,26 +205,26 @@ class WooCommerce_Hooks {
                 return;
             }
 
-            $_POST['welp_selected_tier'] = $tier_level;
-            $_POST['welp_tier_name'] = $tier->tier_name;
-            $_POST['welp_tier_price'] = (float) $price;
-            $_POST['welp_price_type'] = $price_type;
+            $cart_item_data['welp_tier'] = [
+                'level' => $tier_level,
+                'name' => $tier->tier_name,
+                'price' => (float) $price,
+                'price_type' => $price_type,
+            ];
 
-            $this->log('Set WELP POST fields for Cart_Integration', [
-                'welp_selected_tier' => $tier_level,
-                'welp_tier_name' => $tier->tier_name,
-                'welp_tier_price' => $price,
-                'welp_price_type' => $price_type,
+            $this->log('Set welp_tier in cart_item_data', [
+                'tier_level' => $tier_level,
+                'tier_name' => $tier->tier_name,
+                'tier_price' => $price,
+                'price_type' => $price_type,
             ]);
         }
-
-        $cart_item_data = [];
 
         $product = wc_get_product($product_id);
         $this->log('Product state before add_to_cart', [
             'product_id' => $product_id,
             'quantity' => $quantity,
-            'welp_post_fields_set' => isset($_POST['welp_selected_tier']),
+            'cart_item_data' => $cart_item_data,
             'product_exists' => $product ? 'yes' : 'no',
             'product_type' => $product ? $product->get_type() : 'N/A',
             'is_purchasable' => $product ? ($product->is_purchasable() ? 'yes' : 'no') : 'N/A',
@@ -272,12 +274,6 @@ class WooCommerce_Hooks {
                         'status' => $product ? $product->get_status() : 'N/A',
                     ],
                     'cart_item_data_passed' => $cart_item_data,
-                    'welp_post_fields' => [
-                        'welp_selected_tier' => $_POST['welp_selected_tier'] ?? 'not set',
-                        'welp_tier_name' => $_POST['welp_tier_name'] ?? 'not set',
-                        'welp_tier_price' => $_POST['welp_tier_price'] ?? 'not set',
-                        'welp_price_type' => $_POST['welp_price_type'] ?? 'not set',
-                    ],
                 ]);
 
                 $error_message = __('Could not add to cart.', 'wc-carousel-grid-marketplace');
