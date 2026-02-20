@@ -133,7 +133,16 @@ _Screenshots to be added_
 
 ## Changelog
 
-### 1.0.33 - 2026-02-20
+### 1.0.36 - 2026-02-21
+* Fixed: Global experience level filter now correctly updates button's data-tier-level attribute
+* Fixed: Add-to-cart now sends the correct tier level selected via global filter (Entry/Mid/Expert)
+* Improved: updateAllPricingPanels() now syncs button attribute with current tier selection
+
+### 1.0.35 - 2026-02-21
+* Merge release for v1.0.35
+
+### 1.0.34 - 2026-02-21
+* Development update
 * Added: Enhanced debug logging for add-to-cart failures
 * Added: Captures WooCommerce error notices when add_to_cart fails
 * Added: Logs product state (purchasable, stock, price, status) before add_to_cart

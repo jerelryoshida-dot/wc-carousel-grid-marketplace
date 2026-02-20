@@ -4,7 +4,7 @@ Tags: woocommerce, marketplace, carousel, grid, elementor, services, tiered pric
 Requires at least: 5.8
 Tested up to: 6.4
 Requires PHP: 7.4
-Stable tag: 1.0.35
+Stable tag: 1.0.36
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -87,8 +87,18 @@ Yes, tiered pricing is optional and can be disabled in the plugin settings.
 
 == Changelog ==
 
+= 1.0.36 =
+Released: 2026-02-21
 
-== 1.0.34 ==
+* **Fixed**: Global experience level filter now correctly updates button's data-tier-level attribute
+* **Fixed**: Add-to-cart now sends the correct tier level selected via global filter (Entry/Mid/Expert)
+* **Improved**: updateAllPricingPanels() now syncs button attribute with current tier selection
+
+== 1.0.35 ==
+Released: 2026-02-21
+
+* Merge release for v1.0.35
+
 Released: 2026-02-21
 
 * Development update

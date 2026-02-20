@@ -166,6 +166,11 @@
                 
                 $panel.find('.wc-cgm-tier-description').text(tierDescription);
                 
+                var $btn = $panel.find('.wc-cgm-add-to-cart');
+                if ($btn.length) {
+                    $btn.attr('data-tier-level', tierLevel);
+                }
+                
                 $panel.find('.wc-cgm-quantity-input').trigger('change');
             });
             
