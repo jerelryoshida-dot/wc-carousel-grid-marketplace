@@ -381,11 +381,6 @@
                         $btn.find('.wc-cgm-btn-text').text(wc_cgm_ajax.i18n.added_to_cart);
                         
                         $(document.body).trigger('wc_fragment_refresh');
-                        $(document.body).trigger('added_to_cart', [
-                            {},                        // fragments (empty - handled by wc_fragment_refresh)
-                            response.data.cart_hash,   // cart_hash
-                            $btn                       // jQuery button element (required by WC)
-                        ]);
 
                         if (typeof window.cartQuoteRefreshMiniCart === 'function') {
                             window.cartQuoteRefreshMiniCart({ full: false });
