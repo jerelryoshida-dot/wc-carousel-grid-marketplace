@@ -133,6 +133,11 @@ _Screenshots to be added_
 
 ## Changelog
 
+### 1.0.38 - 2026-02-22
+* Fixed: TypeError "removeClass is not a function" when adding to cart
+* Fixed: added_to_cart event now passes correct WooCommerce parameters (fragments, cart_hash, $button)
+* Added: Mini-cart refresh via cartQuoteRefreshMiniCart() after successful add-to-cart
+
 ### 1.0.37 - 2026-02-21
 * Fixed: Cart now correctly saves the selected tier level (was defaulting to tier 1)
 * Fixed: Set $_POST['selected_tier'] before add_to_cart() for WELP compatibility

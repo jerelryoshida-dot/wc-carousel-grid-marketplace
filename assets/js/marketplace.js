@@ -375,17 +375,21 @@
                 url: wc_cgm_ajax.ajax_url,
                 type: 'POST',
                 data: ajaxData,
-                success: function(response) {
+            success: function(response) {
                     WC_CGM_Marketplace.log('AJAX success response:', response);
                     if (response.success) {
                         $btn.find('.wc-cgm-btn-text').text(wc_cgm_ajax.i18n.added_to_cart);
                         
                         $(document.body).trigger('wc_fragment_refresh');
                         $(document.body).trigger('added_to_cart', [
-                            response.data.cart_item_key,
-                            response.data.cart_count,
-                            response.data.cart_total
+                            {},                        // fragments (empty - handled by wc_fragment_refresh)
+                            response.data.cart_hash,   // cart_hash
+                            $btn                       // jQuery button element (required by WC)
                         ]);
+
+                        if (typeof window.cartQuoteRefreshMiniCart === 'function') {
+                            window.cartQuoteRefreshMiniCart({ full: false });
+                        }
 
                         setTimeout(function() {
                             $btn.find('.wc-cgm-btn-text').text('Add to Cart');
