@@ -383,7 +383,7 @@
                         $(document.body).trigger('wc_fragment_refresh');
 
                         if (typeof window.cartQuoteRefreshMiniCart === 'function') {
-                            window.cartQuoteRefreshMiniCart({ full: false });
+                            window.cartQuoteRefreshMiniCart({ full: true });
                         }
 
                         setTimeout(function() {
