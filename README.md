@@ -133,6 +133,10 @@ _Screenshots to be added_
 
 ## Changelog
 
+### 1.0.48 - 2026-02-23
+* Fixed: PHP warning "Undefined array key 'columns'" in Elementor widget
+* Improved: Added defensive null coalescing to all widget settings for better reliability
+
 ### 1.0.47 - 2026-02-23
 * Fixed: Elementor widget now correctly appears under "Yosh Tools" category (hook timing fix)
 * Changed: Moved Elementor registration to main plugin file for proper hook execution

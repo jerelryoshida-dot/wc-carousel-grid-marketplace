@@ -484,37 +484,37 @@ class Marketplace_Widget extends Widget_Base {
         $settings = $this->get_settings_for_display();
 
         $category = '';
-        if ($settings['source_type'] === 'categories' && !empty($settings['categories'])) {
+        if (($settings['source_type'] ?? 'all') === 'categories' && !empty($settings['categories'])) {
             $category = implode(',', $settings['categories']);
         }
 
         $products = '';
-        if ($settings['source_type'] === 'products' && !empty($settings['products'])) {
+        if (($settings['source_type'] ?? 'all') === 'products' && !empty($settings['products'])) {
             $products = implode(',', $settings['products']);
         }
 
         $shortcode_atts = [
-            'columns' => $settings['columns'],
-            'columns_tablet' => $settings['columns_tablet'] ?? 2,
-            'columns_mobile' => $settings['columns_mobile'] ?? 1,
+            'columns' => $settings['columns'] ?? '3',
+            'columns_tablet' => $settings['columns_tablet'] ?? '2',
+            'columns_mobile' => $settings['columns_mobile'] ?? '1',
             'category' => $category,
             'products' => $products,
-            'tier' => $settings['default_tier'],
-            'limit' => $settings['products_per_page'],
-            'orderby' => $settings['orderby'],
-            'order' => $settings['order'],
-            'show_sidebar' => $settings['show_sidebar'] === 'yes' ? 'true' : 'false',
-            'show_filter' => $settings['show_filter'] === 'yes' ? 'true' : 'false',
-            'show_search' => $settings['show_search'] === 'yes' ? 'true' : 'false',
-            'layout' => $settings['layout_type'],
-            'mobile_carousel' => $settings['layout_type'] === 'hybrid' ? 'true' : 'false',
-            'infinite_scroll' => $settings['infinite_scroll'] === 'yes' ? 'true' : 'false',
-            'marketplace_only' => $settings['marketplace_only'] === 'yes' ? 'true' : 'false',
+            'tier' => $settings['default_tier'] ?? '0',
+            'limit' => $settings['products_per_page'] ?? 12,
+            'orderby' => $settings['orderby'] ?? 'date',
+            'order' => $settings['order'] ?? 'DESC',
+            'show_sidebar' => ($settings['show_sidebar'] ?? 'yes') === 'yes' ? 'true' : 'false',
+            'show_filter' => ($settings['show_filter'] ?? 'yes') === 'yes' ? 'true' : 'false',
+            'show_search' => ($settings['show_search'] ?? 'no') === 'yes' ? 'true' : 'false',
+            'layout' => $settings['layout_type'] ?? 'grid',
+            'mobile_carousel' => ($settings['layout_type'] ?? 'grid') === 'hybrid' ? 'true' : 'false',
+            'infinite_scroll' => ($settings['infinite_scroll'] ?? 'no') === 'yes' ? 'true' : 'false',
+            'marketplace_only' => ($settings['marketplace_only'] ?? 'no') === 'yes' ? 'true' : 'false',
         ];
 
         $shadow_class = '';
-        if ($settings['card_shadow'] !== 'none') {
-            $shadow_class = 'wc-cgm-shadow-' . $settings['card_shadow'];
+        if (($settings['card_shadow'] ?? 'light') !== 'none') {
+            $shadow_class = 'wc-cgm-shadow-' . ($settings['card_shadow'] ?? 'light');
         }
 
         $wrapper_class = 'wc-cgm-marketplace ' . $shadow_class;
