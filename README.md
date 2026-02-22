@@ -133,6 +133,10 @@ _Screenshots to be added_
 
 ## Changelog
 
+### 1.0.50 - 2026-02-23
+* Fixed: Console debug logs now respect WP_DEBUG setting (hidden in production)
+* Improved: Debug mode now syncs with WordPress WP_DEBUG constant
+
 ### 1.0.49 - 2026-02-23
 * Fixed: Content area now properly takes remaining space in layout
 * Fixed: Search bar, filter bar, section header, and grid now take full width

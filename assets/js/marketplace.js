@@ -2,11 +2,13 @@
     'use strict';
 
     var WC_CGM_Marketplace = {
-        debug: true,
+        debug: wc_cgm_ajax?.debug || false,
         isLoading: true,
 
         log: function(...args) {
-            console.log('[WC_CGM]', ...args);
+            if (this.debug) {
+                console.log('[WC_CGM]', ...args);
+            }
         },
 
         currentCategory: 0,

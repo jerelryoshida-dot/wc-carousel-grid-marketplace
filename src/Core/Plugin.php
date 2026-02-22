@@ -117,6 +117,7 @@ class Plugin {
         wp_localize_script('wc-cgm-marketplace', 'wc_cgm_ajax', [
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('wc_cgm_frontend_nonce'),
+            'debug' => (defined('WP_DEBUG') && WP_DEBUG) || (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG),
             'i18n' => [
                 'added_to_cart' => __('Added to cart!', 'wc-carousel-grid-marketplace'),
                 'error' => __('An error occurred. Please try again.', 'wc-carousel-grid-marketplace'),
