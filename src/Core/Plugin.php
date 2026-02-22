@@ -28,7 +28,6 @@ class Plugin {
         $this->services = [
             'repository' => new \WC_CGM\Database\Repository(),
             'settings' => new \WC_CGM\Admin\Settings(),
-            'elementor' => new \WC_CGM\Elementor\Elementor_Manager(),
         ];
     }
 

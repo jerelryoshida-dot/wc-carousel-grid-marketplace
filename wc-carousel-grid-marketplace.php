@@ -3,7 +3,7 @@
  * Plugin Name: WooCommerce Carousel/Grid Marketplace
  * Plugin URI: https://github.com/Jerel-R-Yoshida/wc-carousel-grid-marketplace
  * Description: Service marketplace with carousel/grid layout, tiered pricing via WELP, and Elementor compatibility.
- * Version: 1.0.46
+ * Version: 1.0.47
  * Author: Jerel Yoshida
  * Author URI: https://github.com/Jerel-R-Yoshida
  * Text Domain: wc-carousel-grid-marketplace
@@ -20,7 +20,7 @@
 
 defined('ABSPATH') || exit;
 
-define('WC_CGM_VERSION', '1.0.46');
+define('WC_CGM_VERSION', '1.0.47');
 define('WC_CGM_PLUGIN_FILE', __FILE__);
 define('WC_CGM_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('WC_CGM_PLUGIN_URL', plugin_dir_url(__FILE__));
@@ -45,6 +45,21 @@ if (!function_exists('wc_cgm_autoloader')) {
     }
 
     spl_autoload_register('wc_cgm_autoloader');
+}
+
+/**
+ * Check if Elementor is active
+ *
+ * @return bool
+ */
+function wc_cgm_check_elementor(): bool {
+    $active_plugins = (array) get_option('active_plugins', []);
+    $network_active_plugins = (array) get_site_option('active_sitewide_plugins', []);
+    
+    $all_plugins = array_merge($active_plugins, array_keys($network_active_plugins));
+    
+    return in_array('elementor/elementor.php', $all_plugins, true)
+        || array_key_exists('elementor/elementor.php', $network_active_plugins);
 }
 
 function wc_cgm(): WC_CGM\Core\Plugin {
@@ -128,6 +143,41 @@ function wc_cgm_init() {
     }
 
     wc_cgm();
+    
+    // Initialize Elementor widgets if Elementor is active
+    if (wc_cgm_check_elementor()) {
+        add_action('elementor/elements/categories_registered', 'wc_cgm_register_elementor_category');
+        add_action('elementor/widgets/register', 'wc_cgm_register_elementor_widgets');
+    }
+}
+
+/**
+ * Register custom Elementor category
+ *
+ * @param object $elements_manager Elementor elements manager
+ */
+function wc_cgm_register_elementor_category($elements_manager): void {
+    $elements_manager->add_category(
+        'yosh-tools',
+        [
+            'title' => __('Yosh Tools', 'wc-carousel-grid-marketplace'),
+            'icon'  => 'fa fa-plug',
+        ]
+    );
+}
+
+/**
+ * Register Elementor widgets
+ *
+ * @param object $widgets_manager Elementor widgets manager
+ */
+function wc_cgm_register_elementor_widgets($widgets_manager): void {
+    if (!class_exists('\Elementor\Widget_Base')) {
+        return;
+    }
+    
+    require_once WC_CGM_PLUGIN_DIR . 'src/Elementor/Widgets/Marketplace_Widget.php';
+    $widgets_manager->register(new \WC_CGM\Elementor\Widgets\Marketplace_Widget());
 }
 
 register_activation_hook(__FILE__, function() {

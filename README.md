@@ -133,6 +133,11 @@ _Screenshots to be added_
 
 ## Changelog
 
+### 1.0.47 - 2026-02-23
+* Fixed: Elementor widget now correctly appears under "Yosh Tools" category (hook timing fix)
+* Changed: Moved Elementor registration to main plugin file for proper hook execution
+* Removed: Deleted unused Elementor_Manager.php class
+
 ### 1.0.46 - 2026-02-23
 * Changed: Elementor widget now appears under "Yosh Tools" category
 * Changed: Updated Elementor category icon to tools icon
