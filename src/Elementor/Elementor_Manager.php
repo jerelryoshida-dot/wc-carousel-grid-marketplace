@@ -48,9 +48,9 @@ class Elementor_Manager {
     }
 
     public function register_category($elements_manager): void {
-        $elements_manager->add_category('welp-marketplace', [
-            'title' => __('Experience Level Pricing', 'wc-carousel-grid-marketplace'),
-            'icon' => 'fa fa-tags',
+        $elements_manager->add_category('yosh-tools', [
+            'title' => __('Yosh Tools', 'wc-carousel-grid-marketplace'),
+            'icon' => 'eicon-tools',
         ]);
     }
 

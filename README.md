@@ -133,6 +133,10 @@ _Screenshots to be added_
 
 ## Changelog
 
+### 1.0.46 - 2026-02-23
+* Changed: Elementor widget now appears under "Yosh Tools" category
+* Changed: Updated Elementor category icon to tools icon
+
 ### 1.0.45 - 2026-02-22
 * Fixed: Sub-price now correctly shows selected tier's hourly/monthly rate (was stuck on Entry tier)
 * Fixed: Headcount button height adjusted for better alignment

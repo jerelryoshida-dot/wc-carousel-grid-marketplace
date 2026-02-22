@@ -25,7 +25,7 @@ class Marketplace_Widget extends Widget_Base {
     }
 
     public function get_categories(): array {
-        return ['welp-marketplace', 'woocommerce'];
+        return ['yosh-tools'];
     }
 
     private function get_product_categories(): array {
