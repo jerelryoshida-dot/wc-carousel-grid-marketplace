@@ -133,6 +133,27 @@ _Screenshots to be added_
 
 ## Changelog
 
+### 1.0.44 - 2026-02-22
+* Fixed: Added pointer-events: none to description elements for better click handling
+* Changed: Hidden category icons (dashicons) for cleaner UI appearance
+* Fixed: Add-to-cart button width enforced with !important declaration
+
+### 1.0.43 - 2026-02-22
+* Added: Instant mini-cart refresh without extra AJAX call
+* Improved: add-to-cart response now includes cart_data for immediate mini-cart update
+
+### 1.0.42 - 2026-02-21
+* Removed .gitignore.example - not needed for plugin distribution
+
+### 1.0.41 - 2026-02-21
+* Removed .gitignore from tracking - now local only
+
+### 1.0.40 - 2026-02-21
+* Development update
+
+### 1.0.39 - 2026-02-22
+* Development update
+
 ### 1.0.38 - 2026-02-22
 * Fixed: TypeError "removeClass is not a function" when adding to cart
 * Fixed: added_to_cart event now passes correct WooCommerce parameters (fragments, cart_hash, $button)

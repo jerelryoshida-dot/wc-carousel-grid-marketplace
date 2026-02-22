@@ -4,7 +4,7 @@ Tags: woocommerce, marketplace, carousel, grid, elementor, services, tiered pric
 Requires at least: 5.8
 Tested up to: 6.4
 Requires PHP: 7.4
-Stable tag: 1.0.39
+Stable tag: 1.0.44
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -87,6 +87,33 @@ Yes, tiered pricing is optional and can be disabled in the plugin settings.
 
 == Changelog ==
 
+== 1.0.44 ==
+Released: 2026-02-22
+
+* **Fixed**: Added pointer-events: none to description elements for better click handling
+* **Changed**: Hidden category icons (dashicons) for cleaner UI appearance
+* **Fixed**: Add-to-cart button width enforced with !important declaration
+
+== 1.0.43 ==
+Released: 2026-02-22
+
+* **Added**: Instant mini-cart refresh without extra AJAX call
+* **Improved**: add-to-cart response now includes cart_data for immediate mini-cart update
+
+== 1.0.42 ==
+Released: 2026-02-21
+
+* Removed .gitignore.example - not needed for plugin distribution
+
+== 1.0.41 ==
+Released: 2026-02-21
+
+* Removed .gitignore from tracking - now local only
+
+== 1.0.40 ==
+Released: 2026-02-21
+
+* Development update
 
 == 1.0.39 ==
 Released: 2026-02-22

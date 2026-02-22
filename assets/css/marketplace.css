@@ -28,6 +28,7 @@
     margin: 0 0 20px 0;
     font-size: 13px;
     color: var(--wc-cgm-text-medium, #6b7280);
+    pointer-events: none !important;
 }
 
 .wc-cgm-category-nav {
@@ -64,9 +65,9 @@
 }
 
 .wc-cgm-category-icon .dashicons {
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
+    font-size: 0;
+    width: 0;
+    height: 0;
 }
 
 .wc-cgm-category-name {
@@ -185,6 +186,7 @@
     margin: 4px 0 0 0;
     font-size: 14px;
     color: var(--wc-cgm-text-medium, #6b7280);
+    pointer-events: none !important;
 }
 
 .wc-cgm-grid {
@@ -497,7 +499,7 @@
 }
 
 .wc-cgm-add-to-cart {
-    width: 100%;
+    width: 100% !important; 
     padding: 14px 20px;
     background: var(--wc-cgm-primary, #22c55e);
     color: #fff;
