@@ -4,6 +4,8 @@
 [![WordPress](https://img.shields.io/badge/WordPress-5.8%2B-blue.svg)](https://wordpress.org/)
 [![PHP](https://img.shields.io/badge/PHP-7.4%2B-purple.svg)](https://php.net/)
 [![WooCommerce](https://img.shields.io/badge/WooCommerce-6.0%2B-purple.svg)](https://woocommerce.com/)
+[![CSS](https://img.shields.io/badge/CSS-3%2B-orange.svg)](#css)
+[![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow.svg)](#javascript)
 
 A modern service marketplace carousel/grid for WooCommerce with Elementor support and optional tiered pricing.
 
@@ -126,6 +128,20 @@ The marketplace features a global experience level selector that affects all pro
 | Entry | Green | Budget-friendly option |
 | Mid | Blue | Standard option |
 | Expert | Purple | Premium option |
+
+## CSS
+
+The plugin includes the following CSS files:
+
+- `assets/css/marketplace.css` - Main marketplace styles (grid, cards, sidebar)
+- `assets/css/frontend.css` - Frontend-specific styles (tier filters, pricing panel)
+
+## JavaScript
+
+The plugin includes the following JavaScript files:
+
+- `assets/js/marketplace.js` - Main marketplace functionality (filtering, add-to-cart, tier selection)
+- `assets/js/frontend.js` - Frontend-specific interactions
 
 ## Screenshots
 
