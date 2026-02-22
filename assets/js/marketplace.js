@@ -156,6 +156,12 @@
                     .data('price', newPrice)
                     .html(WC_CGM_Marketplace.formatPrice(newPrice));
                 
+                if (priceType === 'monthly') {
+                    $panel.find('.wc-cgm-price-sub').html(WC_CGM_Marketplace.formatPrice(hourlyPrice) + '/hr');
+                } else {
+                    $panel.find('.wc-cgm-price-sub').html(WC_CGM_Marketplace.formatPrice(monthlyPrice) + '/mo');
+                }
+                
                 $panel.find('.wc-cgm-total-price').data('monthly-price', monthlyPrice);
                 
                 var badgeClass = ['entry', 'mid', 'expert'][tierLevel - 1] || 'default';

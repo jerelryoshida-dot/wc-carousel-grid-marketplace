@@ -133,6 +133,10 @@ _Screenshots to be added_
 
 ## Changelog
 
+### 1.0.45 - 2026-02-22
+* Fixed: Sub-price now correctly shows selected tier's hourly/monthly rate (was stuck on Entry tier)
+* Fixed: Headcount button height adjusted for better alignment
+
 ### 1.0.44 - 2026-02-22
 * Fixed: Added pointer-events: none to description elements for better click handling
 * Changed: Hidden category icons (dashicons) for cleaner UI appearance
