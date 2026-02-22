@@ -88,10 +88,14 @@
 }
 
 .wc-cgm-content {
+    width: 100%;
     min-width: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .wc-cgm-search-bar {
+    width: 100%;
     display: flex;
     gap: 8px;
     margin-bottom: 20px;
@@ -127,6 +131,7 @@
 }
 
 .wc-cgm-filter-bar {
+    width: 100%;
     display: flex;
     align-items: center;
     gap: 12px;
@@ -172,6 +177,7 @@
 }
 
 .wc-cgm-section-header {
+    width: 100%;
     margin-bottom: 24px;
 }
 
@@ -190,6 +196,7 @@
 }
 
 .wc-cgm-grid {
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(var(--wc-cgm-columns, 3), 1fr);
     gap: 24px;

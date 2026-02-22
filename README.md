@@ -133,6 +133,10 @@ _Screenshots to be added_
 
 ## Changelog
 
+### 1.0.49 - 2026-02-23
+* Fixed: Content area now properly takes remaining space in layout
+* Fixed: Search bar, filter bar, section header, and grid now take full width
+
 ### 1.0.48 - 2026-02-23
 * Fixed: PHP warning "Undefined array key 'columns'" in Elementor widget
 * Improved: Added defensive null coalescing to all widget settings for better reliability
